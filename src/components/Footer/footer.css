@@ -1,0 +1,15 @@
+.Footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #4285f4;
+    color: #fff;
+    /* margin-bottom: 0; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+  }
+  
+  .Footer p {
+    font-size: 14px;
+  }
