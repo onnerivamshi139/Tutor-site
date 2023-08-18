@@ -18,6 +18,7 @@ let navigate=useNavigate();
       
         <Card.Body>
             <Card.Title>Username : {userobj.username}</Card.Title>
+           <img className="profile-pic m-5" src={userobj.profileImg} alt="error" />
             <Card.Text>
             Email : {userobj.email}
             </Card.Text>

@@ -22,6 +22,8 @@ import Userdashboard from './userdashboard/userdashboard';
 import Tutordashboard from './components/tutordashboard/Tutordashboard';
 import Tutorsignup from './components/Signup/Tutorsignup';
 import TutorLogin from './components/login/TutorLogin';
+import './App.css';
+
 
 function App() {
 
@@ -85,6 +87,7 @@ function App() {
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={userLogout}>Logout</NavDropdown.Item>
               </NavDropdown>
+              
             )}
             {shouldDisplayTutorLogout && (
               <NavDropdown title={tutorobj ? tutorobj.username : 'temp'} id="basic-nav-dropdown">
@@ -119,9 +122,7 @@ function App() {
 
       </Routes>
 
-      <div className="footer mt-3">
-        <Footer />
-      </div>
+      
 
     </div>
   );

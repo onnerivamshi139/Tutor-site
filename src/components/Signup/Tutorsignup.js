@@ -35,7 +35,7 @@ function Tutorsignup(){
         formData.append("photo",img);
 
   
-        axios.post('http://localhost:4000/tutor-api/create-tutor',userObj)
+        axios.post('http://localhost:4000/tutor-api/create-tutor',formData)
         .then(response=>{
             console.log(response)
             alert(response.data.message)
@@ -51,40 +51,43 @@ function Tutorsignup(){
         })
     }
     return(
-        <div>
+        
             
-            <div className='display-5 text-center text-info mb-3'>SignUp </div> 
-            <div>
-                <b>Joining as Student? <a href="" onClick={studentnav}>click here</a></b>
-            </div>
-            <Form className='w-50 mx-auto' onSubmit={handleSubmit(onFormSubmit)}>
+        <div className="signup-container">
+        <div className="signup-heading">SignUp</div>
+        <div className="tutor-link">
+          <b>
+            Joining as student? <a href="#" onClick={studentnav}>click here</a>
+          </b>
+        </div>
+            <Form  onSubmit={handleSubmit(onFormSubmit)}>
             
 
-            <Form.Group className="mb-3 w-60 mx-auto">
+            <Form.Group className="mb-3">
                 <Form.Label>Username</Form.Label>
                 <Form.Control type="text" placeholder="Enter Username"{...register("username",{required:true})} />
                 {errors.username&& <p className='text-danger'>*Username is required</p>}
             </Form.Group>
 
-            <Form.Group className="mb-3 w-60 mx-auto">
+            <Form.Group className="mb-3">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email" {...register("email",{required:true})}  />
                 {errors.email&& <p className='text-danger'>*email is required</p>}
             </Form.Group>
 
-            <Form.Group className="mb-3 w-60 mx-auto" >
+            <Form.Group className="mb-3" >
                 <Form.Label>City</Form.Label>
                 <Form.Control type="city" placeholder="Enter city or town" {...register("city",{required:true})}  />
                 {errors.city&& <p className='text-danger'>*city is required</p>}
             </Form.Group>
 
-            <Form.Group className="mb-3 w-60 mx-auto" >
+            <Form.Group className="mb-3" >
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" {...register("password",{required:true})}  />
                 {errors.password&& <p className='text-danger'>*password is required</p>}
             </Form.Group>
 
-            <Form.Group className="mb-3 w-60 mx-auto" >
+            <Form.Group className="mb-3" >
                 <Form.Label>Select photo</Form.Label>
                 <Form.Control type="file" placeholder="photo" {...register("photo",{required:true})} 
                 onChange={(event)=>onImageSelect(event)}

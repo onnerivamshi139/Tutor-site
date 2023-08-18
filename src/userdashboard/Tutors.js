@@ -1,52 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux/es/hooks/useSelector";
 import axios from "axios";
-import { useEffect,useState } from "react";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-function Tutors(){
-    let navigate=useNavigate();
-    const [tutors, setTutors] = useState([]);
+import Form from 'react-bootstrap/Form';
 
-    useEffect(() => {
-      axios.get('http://localhost:4000/tutor-api/getusers')  // Make sure this matches your backend API endpoint
-        .then(response => {
-          setTutors(response.data.payload);
-        })
-        .catch(error => {
-          console.error('Error fetching tutor data:', error);
-        });
-        console.log(tutors);
-    }, []);
-    
-    
-    return(
-        <div>
-      <h1>Tutor Collection</h1>
-      <ul className="list-style-type: none;">
-        {tutors.map(tutor => (
-          <li >
-            
-            {/* Display other tutor details as needed */}
-            <Card style={{ width: '100' }} className='mx-auto mt-50'>
-      
-                <Card.Body>
-                    <Card.Title>{tutor.username}</Card.Title>
-                    <Card.Text>
-                    Email : {tutor.email}
-                    </Card.Text>
-                    <Card.Text>
-                    City : {tutor.city}
-                    </Card.Text>
-                    <Button variant="primary">equest</Button>
-                </Card.Body>
+function Tutors() {
+  let navigate = useNavigate();
+  const [city, setCity] = useState('Hyderabad');
+  const [tutors, setTutors] = useState([]);
+  const [filteredTutors, setFilteredTutors] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/tutor-api/getusers')
+      .then(response => {
+        setTutors(response.data.payload);
+      })
+      .catch(error => {
+        console.error('Error fetching tutor data:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (city) {
+      const filtered = tutors.filter(tutor => tutor.city === city);
+      setFilteredTutors(filtered);
+    } else {
+      setFilteredTutors([]);
+    }
+  }, [city, tutors]);
+
+  return (
+    <div className="tutors-container">
+      <div className="search-bar">
+        <Form className="">
+          <Form.Control
+            type="search"
+            placeholder="Search"
+            className=""
+            aria-label="Search"
+            onChange={(e) => setCity(e.target.value)}
+          />
+        </Form>
+      </div>
+
+      <ul className="tutors-list">
+        {filteredTutors.map(tutor => (
+          <li key={tutor._id} className="tutor-card">
+            <Card style={{ width: '100' }} className='mx-auto mt-3'>
+              <Card.Body className="m-3">
+              <Card.Img variant="top" src={tutor.profileImg} className="profile-img" />
+                <Card.Title>{tutor.username}</Card.Title>
+                <Card.Text>
+                  Email: {tutor.email}
+                </Card.Text>
+                <Card.Text>
+                  City: {tutor.city}
+                </Card.Text>
+                <Button variant="primary">Request</Button>
+              </Card.Body>
             </Card>
           </li>
         ))}
       </ul>
     </div>
-    );
+  );
 }
 
 export default Tutors;
+ 

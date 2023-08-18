@@ -11,3 +11,42 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.profile-pic{
+  width: 60%;
+  height: 30%;
+  border-radius: 50%;
+}
+.tutors-container {
+  position: relative;
+}
+
+.search-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10px;
+}
+
+.tutors-list {
+  padding-top: 50px; /* Add some space to separate from the search bar */
+  list-style-type: none;
+}
+
+.tutor-card {
+  margin: 10px;
+}
+
+.profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+  margin-top: -40px;
+}
+
+
+
+

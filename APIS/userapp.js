@@ -22,13 +22,13 @@ const cloudinaryStorage=new CloudinaryStorage({
     cloudinary:cloudinary,
     params:async(req,res)=>{
         return{
-            folder:"ecom",
-            public_id:file.fieldname+"-"+Date.now(),
+            folder:"tutorapp",
+            public_id:"img" + "-" + Date.now(),
         };
     },
 });
 
-var upload=multer({storage:CloudinaryStorage});
+var upload=multer({storage:cloudinaryStorage});
 
 Userapp.use(exp.json())
 
@@ -58,7 +58,7 @@ Userapp.post('/login',expressAsyncHandler(async(request,response)=>{
         if(status==false){
             response.send({message:"Invalid password"})
         }
-        else{``
+        else{`  `
             //create token
 
             let token=jwt.sign({username:userofDB.username},"abcedef",{expiresIn:60})
@@ -71,7 +71,8 @@ Userapp.post('/create-user',
 
 upload.single("photo"),
 expressAsyncHandler(async(request,response)=>{
-    let newUser=request.body;
+    //console.log(request.file.path);
+    let newUser=JSON.parse(request.body.userObj);
     let usercollection=request.app.get("usercollection")
     let existinguser=await usercollection.findOne({username:newUser.username})
     if(existinguser!=null){
@@ -80,7 +81,9 @@ expressAsyncHandler(async(request,response)=>{
     else{
         let hashedpassword= await bcryptjs.hash(newUser.password,6)
         newUser.password=hashedpassword
+        newUser.profileImg=request.file.path;
         await usercollection.insertOne(newUser);
+        
         response.send({message:"new user created"})
     }
 }));

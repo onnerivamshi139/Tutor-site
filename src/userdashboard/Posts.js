@@ -20,7 +20,7 @@ function Posts(){
 
   useEffect(() => {
     if (city) {
-      const filtered = tutors.filter(tutor => tutor.city.toLowerCase() === city.toLowerCase());
+      const filtered = tutors.filter(tutor => tutor.city === city);
       setFilteredTutors(filtered);
     } else {
       setFilteredTutors([]);

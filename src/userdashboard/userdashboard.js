@@ -16,8 +16,8 @@ function Userdashboard(){
     }
     return(
         <div>
-          {isSuccess===true ?(
-            <div className="App">
+          
+            <div>
       <Navbar  expand="lg" className="bg-body-tertiary">
       <Container>
       
@@ -32,7 +32,7 @@ function Userdashboard(){
             
 
             
-          </Nav>
+          </Nav> 
           
         </Navbar.Collapse>
       </Container>
@@ -42,9 +42,7 @@ function Userdashboard(){
             <Outlet/>
       
         </div>
-        ):(
-          <></>
-        )}
+       
     </div>
     );
 }

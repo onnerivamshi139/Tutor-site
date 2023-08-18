@@ -1,6 +1,8 @@
 import React from 'react'
 import './Home.css'
 import { useNavigate } from 'react-router-dom';
+import Carousel from 'react-bootstrap/Carousel';
+
 
 function Home(){
   let navigate=useNavigate();
@@ -9,6 +11,7 @@ function Home(){
     }
     return(
         <div className='body'>
+          
           <header className="App-header">
         <h1>Home Tutoring Services</h1>
         <p>Welcome to our website!</p>

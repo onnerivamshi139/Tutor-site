@@ -22,13 +22,13 @@ const cloudinaryStorage=new CloudinaryStorage({
     cloudinary:cloudinary,
     params:async(req,res)=>{
         return{
-            folder:"ecom",
-            public_id:file.fieldname+"-"+Date.now(),
+            folder:"tutorimg",
+            public_id:"img"+"-"+Date.now(),
         };
     },
 });
 
-var upload=multer({storage:CloudinaryStorage});
+var upload=multer({storage:cloudinaryStorage});
 
 Tutorapp.use(exp.json())
 
@@ -82,7 +82,7 @@ Tutorapp.post('/create-tutor',
 
 upload.single("photo"),
 expressAsyncHandler(async(request,response)=>{
-    let newUser=request.body;
+    let newUser=JSON.parse(request.body.userObj);
     let tutorcollection=request.app.get("tutorcollection")
     let existinguser=await tutorcollection.findOne({username:newUser.username})
     if(existinguser!=null){
@@ -91,6 +91,7 @@ expressAsyncHandler(async(request,response)=>{
     else{
         let hashedpassword= await bcryptjs.hash(newUser.password,6)
         newUser.password=hashedpassword
+        newUser.profileImg=request.file.path;
         await tutorcollection.insertOne(newUser);
         response.send({message:"new user created"})
     }
