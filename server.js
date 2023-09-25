@@ -20,10 +20,12 @@ mclient.connect(DBurl)
     let usercollection=dbobj.collection("usercollection")
     let productcollection=dbobj.collection("productcollection")
     let tutorcollection=dbobj.collection("tutorcollection")
+    let requestcollection=dbobj.collection("requestcollection")
     //sharing collection objects to APIs
     app.set("usercollection",usercollection); 
     app.set("tutorcollection",tutorcollection); 
     app.set("productcollection",productcollection);
+    app.set("requestcollection",requestcollection);
     console.log("DB connection success")
 })
 .catch(err=>console.log("error in DB connection",err))

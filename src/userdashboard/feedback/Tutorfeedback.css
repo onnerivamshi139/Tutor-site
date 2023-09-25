@@ -1,0 +1,41 @@
+/* TutorProfile.css */
+
+/* Styling for the entire container */
+.tutor-profile-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  /* Styling for the Tutor Profile Card */
+  .card {
+    width: 300px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+  }
+  
+  .profile-img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Styling for the feedback form */
+  .feedback-form {
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    text-align: left;
+  }
+  
+  /* Styling for the Submit Feedback button */
+  .btn-primary {
+    margin-top: 10px;
+  }
+  
+  /* Optional: Style the h2 heading */
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  

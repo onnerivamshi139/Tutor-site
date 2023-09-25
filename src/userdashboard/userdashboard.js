@@ -16,32 +16,11 @@ function Userdashboard(){
     }
     return(
         <div>
-          
-            <div>
-      <Navbar  expand="lg" className="bg-body-tertiary">
-      <Container>
-      
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="justify-content-end">
-          <Nav variant="pills" className="me-auto">
-            
-            <NavLink className="nav-link" to="/Userdashboard/tutors">Tutors</NavLink>
-            <NavLink className="nav-link" to="/Userdashboard/posts">posts</NavLink>
-            <NavLink className="nav-link" to="/Userdashboard/personalinfo">Profile</NavLink>
-            
-            
 
-            
-          </Nav> 
-          
-        </Navbar.Collapse>
-      </Container>
-      
-    </Navbar>
     
             <Outlet/>
       
-        </div>
+        
        
     </div>
     );

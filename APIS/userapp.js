@@ -43,7 +43,7 @@ Userapp.get('/getusers',expressAsyncHandler(async(request,response)=>{
 }));
 Userapp.post('/login',expressAsyncHandler(async(request,response)=>{
     let usercollection=request.app.get("usercollection")
-    //user credintials fron client
+    //user credintials fron client 
     let usercred=request.body
     //find the user in DB
     let userofDB=await usercollection.findOne({username:usercred.username})
@@ -87,5 +87,49 @@ expressAsyncHandler(async(request,response)=>{
         response.send({message:"new user created"})
     }
 }));
+
+// Add this route to your Express API
+Userapp.post('/update-user', expressAsyncHandler(async (request, response) => {
+    const usercollection = request.app.get("usercollection");
+    const updatedUser = request.body;
+  
+    try {
+      await usercollection.updateOne(
+        { username: updatedUser.username },
+        { $set: { email: updatedUser.email, city: updatedUser.city } }
+      );
+      
+      response.send({ message: "User details updated successfully" });
+    } catch (error) {
+      response.status(500).send({ message: "An error occurred while updating user details" });
+    }
+  }));
+
+  // Add a new route to handle tutor requests
+// Userapp.post('/send-request', expressAsyncHandler(async (request, response) => {
+//     const { tutorId ,userId} = request.body;
+//     const requestcollection = request.app.get("requestcollection");
+  
+//     // Save the request in your database or storage
+//     // Here, we'll assume you have a tutorRequestsCollection
+//     await requestcollection.insertOne({ tutorId, userId });
+  
+//     response.send({ message: 'Request sent successfully' });
+//   }));
+// Userapp.post('/send-request', expressAsyncHandler(async (request, response) => {
+//   const req = request.body;
+//   const requestcollection = request.app.get("requestcollection");
+
+//   console.log(req)
+//   try{
+//     await requestcollection.insertOne(req);
+
+//   response.send({ message: 'Request sent successfully' });
+//   }catch(error){
+//     response.status(500).send({ message: "An error occurred while updating user details" });
+//   }
+// }));
+
+  
 
 module.exports=Userapp; 

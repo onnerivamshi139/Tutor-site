@@ -37,53 +37,52 @@
   }
 }
 
-/* Apply to the Navbar component */
+
 .navbar {
   background-color: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Add a border */
-  box-shadow: none; /* Remove any shadow */
+  border: 1px solid rgba(0, 0, 0, 0.1); 
+  box-shadow: none; 
   transition: background-color 0.3s, border 0.3s, box-shadow 0.3s;
 }
 
-/* Apply to Navbar links */
 .navbar .nav-link {
-  color: black; /* Change text color to black */
+  color: black; 
   transition: color 0.3s;
 }
 
-/* Apply to Navbar links on hover */
+
 .navbar .nav-link:hover {
-  color: rgba(0, 0, 0, 0.7); /* Change hover text color */
+  color: rgba(0, 0, 0, 0.7); 
 }
 
-/* Apply to Navbar links on active */
+
 .navbar .nav-link.active {
-  color: rgba(0, 0, 0, 0.9); /* Change active text color */
+  color: rgba(0, 0, 0, 0.9); 
 }
 
-/* Apply to Navbar brand */
+
 .navbar-brand {
-  color: black; /* Change text color to black */
+  color: black; 
   font-weight: bold;
   transition: color 0.3s;
 }
 
-/* Apply to Navbar brand on hover */
+
 .navbar-brand:hover {
-  color: rgba(0, 0, 0, 0.9); /* Change hover text color */
+  color: rgba(0, 0, 0, 0.9);
 }
 
-/* Apply to Navbar toggler icon */
+
 .navbar-toggler-icon {
-  background-color: black; /* Change toggler background color */
+  background-color: black;
 }
 
-/* Apply to Navbar dropdown items */
+
 .navbar-dropdown .dropdown-item {
-  color: black; /* Change dropdown item text color */
+  color: black; 
 }
 
-/* Apply to Navbar dropdown items on hover */
+
 .navbar-dropdown .dropdown-item:hover {
-  background-color: #f8f9fa; /* Light gray background on hover */
+  background-color: #f8f9fa; 
 }

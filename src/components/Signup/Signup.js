@@ -50,11 +50,11 @@ function Signup() {
   return (
     <div className="signup-container">
     <div className="signup-heading">SignUp</div>
-    <div className="tutor-link">
-      <b>
-        Joining as Tutor? <a href="#" onClick={tutornav}>click here</a>
-      </b>
-    </div>
+      <div className="tutor-link">
+        <b>
+          Joining as Tutor? <a href="#" onClick={tutornav}>click here</a>
+        </b>
+      </div>
       <Form onSubmit={handleSubmit(onFormSubmit)}>
         <Form.Group className="mb-3">
           <Form.Label>Username</Form.Label>
