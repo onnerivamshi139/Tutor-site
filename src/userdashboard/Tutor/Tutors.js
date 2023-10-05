@@ -5,13 +5,16 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useSelector } from "react-redux";
+import './Tutor.css';
+
 
 function Tutors() {
   const [city, setCity] = useState('Hyderabad');
   const [tutors, setTutors] = useState([]);
   const [filteredTutors, setFilteredTutors] = useState([]);
   const { userobj } = useSelector((state) => state.user);
-
+  // const requestobj={username:userobj.username,
+  //                   profileImg:userobj.profileImg};
   useEffect(() => {
     axios.get('http://localhost:4000/tutor-api/getusers')
       .then(response => {
@@ -35,7 +38,7 @@ function Tutors() {
     // Make a POST request to send the request to the tutor
     axios.post('http://localhost:4000/tutor-api/send-request', {
       tutorId: username,
-      userId: userobj.username,
+      userobj: userobj,
     })
     .then(response => {
       // Handle success, e.g., show a confirmation message
@@ -61,22 +64,37 @@ function Tutors() {
         </Form>
       </div>
 
-      <ul className="tutors-list">
+      <ul className="tutors-grid">
         {filteredTutors.map(tutor => (
           <li key={tutor._id} className="tutor-card">
             {/* Use Link to navigate to the tutor profile */}
             < NavLink to={`/Userdashboard/feedback/${tutor.username}`} className="tutor-link" style={{ textDecoration: 'none' }}>
               <Card style={{ width: '100' }} className='mx-auto mt-3'>
                 <Card.Body className="m-3">
-                  <Card.Img variant="top" src={tutor.profileImg} className="profile-img" />
-                  <Card.Title>{tutor.username}</Card.Title>
+                  <Card.Img className="profile-img" variant="top" src={tutor.profileImg}  />
+                  <Card.Title>
+                    <h3>{tutor.username}</h3>
+                    </Card.Title>
                   <Card.Text>
-                    Email: {tutor.email}
+                    <b>Email : </b> {tutor.email}
                   </Card.Text>
                   <Card.Text>
-                    City: {tutor.city}
+                    <b>mobile : </b> {tutor.mobileNumber }
                   </Card.Text>
-                  <Button variant="primary" onClick={() => sendRequest(tutor.username)}>Request</Button>
+                  <Card.Text>
+                    <b>city :</b>  {tutor.city},{tutor.address}
+                  </Card.Text>
+                  <Card.Text>
+                   <b>subjects :</b>{tutor.subjects}
+                  </Card.Text>
+                  
+                  <Button
+                    variant="primary"
+                    onClick={() => sendRequest(tutor.username)}
+                    disabled={tutor.Requests && tutor.Requests.includes(userobj.username)}
+                  >
+                    {tutor.Requests && tutor.Requests.includes(userobj.username) ? 'Request Sent' : 'Request'}
+                  </Button>
                 </Card.Body>
               </Card>
             </NavLink>

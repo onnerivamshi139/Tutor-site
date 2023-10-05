@@ -39,3 +39,44 @@
     margin-bottom: 20px;
   }
   
+
+  /* Tutorfeedback.css */
+
+/* Horizontal grid for feedback cards */
+.feedback-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Adjust as needed */
+  gap: 20px; /* Adjust as needed */
+  margin-top: 20px; /* Adjust as needed */
+}
+
+/* Style for each feedback card */
+.feedback-card {
+  flex: 1;
+  max-width: 300px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative; /* Position relative for icon placement */
+}
+
+/* Style for the icon */
+.feedback-icon {
+  position: absolute;
+  top: 10px; /* Adjust as needed to position the icon */
+  left: 10px; /* Adjust as needed to position the icon */
+  font-size: 24px; /* Adjust the icon size as needed */
+  /* color: #007bff; */
+}
+
+/* Style for feedback text */
+.feedback-text {
+  font-size: 16px;
+  margin-left: 40px /* Adjust the text size as needed */
+}
+/* Margin for the entire page */
+.tutor-profile-container {
+  margin: 20px; /* Adjust as needed */
+}

@@ -1,72 +1,72 @@
-import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import userdashboard from "../userdashboard/userdashboard";
 
-//make http post req to login user
-
-export const tutorLogin=createAsyncThunk('logintutor',async(usercred,thunkApi)=>{
-    let response=await axios.post('http://localhost:4000/tutor-api/tutorlogin',usercred);
-    let data=response.data;
-    console.log(data);
+export const tutorLogin = createAsyncThunk('logintutor', async (usercred, thunkApi) => {
+  try {
+    const response = await axios.post('http://localhost:4000/tutor-api/tutorlogin', usercred);
+    const data = response.data;
     
-    // let navigate=useNavigate();
-    if(data.message==='login success')
-    {
-        //local storage token
-        localStorage.setItem("tutortoken",data.payload)
-        // navigate('/userdashboard') 
-        return data.userObj;
-        
+    if (data.message === 'login success') {
+      localStorage.setItem("tutortoken", data.payload);
+      return data.userObj;
     }
-    if(data.message==="Invalid username" || data.message==="Invalid password"){
-        return thunkApi.rejectWithValue(data); 
 
+    if (data.message === "Invalid username" || data.message === "Invalid password") {
+      return thunkApi.rejectWithValue(data);
     }
-})
+  } catch (error) {
+    return thunkApi.rejectWithValue(error.response.data);
+  }
+});
 
-let tutorSlice=createSlice({
-    name:'tutor',
-    initialState:{
-        tutorobj:{},
-        isError:false,
-        isSuccesstutor:false,
-        isLoading:false,
-        errMsg:''
+export const updateTutor = createAsyncThunk('updatetutor', async (formData) => {
+  try {
+    const response = await axios.post(`http://localhost:4000/tutor-api/update-tutor/${formData.username}`, formData);
+    return response.data.payload;
+  } catch (error) {
+    throw error;
+  }
+});
+
+let tutorSlice = createSlice({
+  name: 'tutor',
+  initialState: {
+    tutorobj: {},
+    isError: false,
+    isSuccesstutor: false,
+    isLoading: false,
+    errMsg: '',
+  },
+  reducers: {
+    cleartutorLoginStatus: (state) => {
+      state.isSuccesstutor = false;
+      state.tutorobj = {};
+      state.isError = false;
+      state.errMsg = '';
     },
-    reducers:{
-        cleartutorLoginStatus:(state)=>{
-            // console.log("he;;       ")
-            state.isSuccesstutor=false;
-            state.tutorobj=null;
-            state.isError=false;
-            state.errMsg='';
-            // console.log(state)
-            return state;
-        }
+  },
+  extraReducers: {
+    [tutorLogin.pending]: (state) => {
+      state.isLoading = true;
     },
-    extraReducers:{
+    [tutorLogin.fulfilled]: (state, action) => {
+      state.tutorobj = action.payload;
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccesstutor = true;
+      state.errMsg = "";
+    },
+    [tutorLogin.rejected]: (state, action) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.isSuccesstutor = false;
+      state.errMsg = action.payload.message;
+    },
+    [updateTutor.fulfilled]: (state, action) => {
+      state.tutorobj = action.payload;
+    },
+  },
+});
 
-        //  track life cycle promise returned by createasyncTHunk function
-        [tutorLogin.pending]:(state,action)=>{
-            state.isLoading=true;
-        },
-
-        [tutorLogin.fulfilled]:(state,action)=>{
-            state.tutorobj=action.payload;
-            state.isLoading=false;
-            state.isError=false;
-            state.isSuccesstutor=true;
-            state.errMsg="b"
-        },
-        [tutorLogin.rejected]:(state,action)=>{
-            state.isError=true;
-            state.isLoading=false;
-            state.isSuccesstutor=false;
-            state.errMsg='error occured'
-        }
-    }
-})
-
-export const {cleartutorLoginStatus}=tutorSlice.actions;
+export const { cleartutorLoginStatus } = tutorSlice.actions;
 export default tutorSlice.reducer;

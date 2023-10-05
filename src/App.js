@@ -9,9 +9,9 @@ import Home from './components/home/Home'
 import Signup from './components/Signup/Signup'
 import Login from './components/login/Login';
 import Contactus from './components/Contactus';
-import Personalinfo from './userdashboard/Personalinfo';
+import Personalinfo from './userdashboard/Profile/Personalinfo';
 import Posts from './userdashboard/Posts';
-import Tutors from './userdashboard/Tutors';
+import Tutors from './userdashboard/Tutor/Tutors';
 import Footer from './components/Footer/footer';
 import { useSelector } from 'react-redux';
 import { clearLoginStatus } from './Slice/userSlice';
@@ -24,6 +24,9 @@ import Tutorsignup from './components/Signup/Tutorsignup';
 import TutorLogin from './components/login/TutorLogin';
 import Updatedetails from './userdashboard/Updatedetails'
 import Tutorfeedback from './userdashboard/feedback/Tutorfeedback';
+import EXtradetails from './components/tutordashboard/Extradetails/EXtradetails';
+import Request from './components/tutordashboard/Request/Request';
+import Dashboard from './components/tutordashboard/Dashboard';
 import './App.css';
 
 
@@ -81,16 +84,19 @@ function App() {
                 <NavLink className="nav-link" to="/contactus">
                   Contactus
                 </NavLink>
+               
+                
               </>
             )}
             {shouldDisplayUserLogout && (<>
               
               <NavLink className="nav-link" to="/Userdashboard/tutors">Tutors</NavLink>
             <NavLink className="nav-link" to="/Userdashboard/posts">posts</NavLink>
+
             {/* <NavLink className="nav-link" to="/Userdashboard/personalinfo">Profile</NavLink> */}
             <NavDropdown title={userobj ? userobj.username : 'temp'} id="basic-nav-dropdown">
                 {/* ... User dropdown menu ... */}
-                <Personalinfo/>
+                <NavDropdown.Item as={NavLink} to="/Userdashboard/personalinfo" >Profile</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={userLogout}>Logout</NavDropdown.Item>
               </NavDropdown>
@@ -98,6 +104,9 @@ function App() {
               
             )}
             {shouldDisplayTutorLogout && (<>
+              <NavLink className="nav-link" to="/dashboard/tutordashboard">Profile</NavLink>
+              <NavLink className="nav-link" to="/dashboard/request">Requests</NavLink>
+            <NavLink className="nav-link" to="/dashboard/Extradetails">Extradetails</NavLink>
               <NavDropdown title={tutorobj ? tutorobj.username : 'temp'} id="basic-nav-dropdown">
                 {/* ... Tutor dropdown menu ... */}
                 <NavDropdown.Divider />
@@ -124,12 +133,17 @@ function App() {
           <Route path="tutors" element={<Tutors />} />
           <Route path="posts" element={<Posts />} />
           <Route path="feedback/:tutorId" element={<Tutorfeedback />} />
-          {/* <Route path="personalinfo" element={<Personalinfo />} /> */}
+           <Route path="personalinfo" element={<Personalinfo />} /> 
 
           <Route path="" element={<Navigate to="tutors" />} />
           
+      </Route>
+        <Route path='/dashboard' element={<Dashboard />} >
+          <Route path="tutordashboard" element={<Tutordashboard />} />
+          <Route path="request" element={<Request/>} />
+          <Route path="Extradetails" element={<EXtradetails />} />
+          <Route path="" element={<Navigate to="tutordashboard" replace />} />
         </Route>
-        <Route path='/tutordashboard' element={<Tutordashboard />} />
 
 
       </Routes>

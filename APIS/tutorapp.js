@@ -101,11 +101,11 @@ Tutorapp.post('/send-request', expressAsyncHandler(async (request, response) => 
     try {
         const tutorcollection = request.app.get("tutorcollection");
         const usercollection=request.app.get("usercollection")
-        const { tutorId, userId } = request.body;
+        const { tutorId, userobj } = request.body;
 
         // Check if the sender and receiver exist in the tutorcollection
         const tutor = await tutorcollection.findOne({ username: tutorId });
-        const student = await usercollection.findOne({ username: userId });
+        const student = await usercollection.findOne({ username: userobj.username });
 
         if (!tutor || !student) {
             return response.status(404).send({ message: "Sender or receiver not found" });
@@ -119,17 +119,17 @@ Tutorapp.post('/send-request', expressAsyncHandler(async (request, response) => 
             student.Requests = [];
         }
 
-        if (tutor.Requests.includes(userId)) {
+        if (tutor.Requests.includes(userobj.username)) {
             return response.status(400).send({ message: "Request already sent" });
         }
 
         // Add the receiver's ID to the sender's sentRequests array
-        tutor.Requests.push(userId);
+        tutor.Requests.push(userobj);
         student.Requests.push(tutorId);
 
         // Save the updated sender document
         await tutorcollection.updateOne({ username: tutorId }, { $set: { Requests: tutor.Requests } });
-        await usercollection.updateOne({ username: userId }, { $set: { Requests: student.Requests } });
+        await usercollection.updateOne({ username: userobj.username }, { $set: { Requests: student.Requests } });
 
         return response.send({ message: "Request sent successfully" });
     } catch (error) {
@@ -145,7 +145,7 @@ Tutorapp.post('/submit-feedback/:id', expressAsyncHandler(async (request, respon
     try {
         const tutorcollection = request.app.get("tutorcollection");
         const tutorId = request.params.id;
-        const { feedback } = request.body;
+        const { feedback,username} = request.body;
 
         // Find the tutor by ID
         const tutor = await tutorcollection.findOne({ username: tutorId });
@@ -155,10 +155,10 @@ Tutorapp.post('/submit-feedback/:id', expressAsyncHandler(async (request, respon
         }
 
         // Add the feedback to the tutor's feedback array
-        if (!tutor.feedback) {
+        if (!tutor.feedback) { 
             tutor.feedback = [];
         }
-        tutor.feedback.push(feedback);
+        tutor.feedback.push({text:feedback, username:username});
 
         // Update the tutor's document with the new feedback
         await tutorcollection.updateOne({ username: tutorId }, { $set: { feedback: tutor.feedback } });
@@ -170,6 +170,164 @@ Tutorapp.post('/submit-feedback/:id', expressAsyncHandler(async (request, respon
     }
 }));
 
+
+Tutorapp.post('/update-tutor/:id', upload.single("profilePicture"), expressAsyncHandler(async (request, response) => {
+    try {
+        const tutorcollection = request.app.get("tutorcollection");
+        const tutorId = request.params.id;
+
+        // Get the tutor's existing details
+        const existingTutor = await tutorcollection.findOne({ username: tutorId });
+
+        if (!existingTutor) {
+            return response.status(404).send({ message: "Tutor not found" });
+        }
+
+        // Get the updated details from the request
+        const { mobileNumber, subjects, address } = request.body;
+
+        // Create a new tutor object with updated details
+        const updatedTutor = {
+            ...existingTutor,
+            mobileNumber,
+            subjects,
+            address,
+        };
+
+        // Update the profile picture if a new one is uploaded
+        if (request.file) {
+            updatedTutor.profileImg = request.file.path;
+        }
+
+        // Update the tutor's document with the new details
+        await tutorcollection.updateOne({ username: tutorId }, { $set: updatedTutor });
+
+        return response.send({ message: "Tutor details updated successfully" });
+    } catch (error) {
+        console.error(error);
+        return response.status(500).send({ message: "Internal server error" });
+    }
+}));
+
+
+
+// Add this route to your tutor API
+Tutorapp.get('/get-requests', expressAsyncHandler(async (request, response) => {
+    try {
+        const tutorcollection = request.app.get("tutorcollection");
+
+        // Find users who have sent requests and project only the "Requests" field
+        const usersWithRequests = await tutorcollection.find({
+            Requests: {
+                $exists: true, // The field exists in the document
+                $not: { $size: 0 } // The field is not an empty array
+            }
+        }, {
+            projection: {
+                _id: 0, // Exclude the _id field
+                Requests: 1 // Include only the Requests field
+            }
+        }).toArray();
+
+        if (!usersWithRequests || usersWithRequests.length === 0) {
+            return response.status(404).send({ message: "No requests found" });
+        }
+
+        return response.send({ message: "Requests retrieved successfully", payload: usersWithRequests });
+    } catch (error) {
+        console.error(error);
+        return response.status(500).send({ message: "Internal server error" });
+    }
+}));
+
+
+
+// Import necessary libraries and middleware
+// ...
+
+// Handle accepting a request
+Tutorapp.post('/accept-request', expressAsyncHandler(async (request, response) => {
+    try {
+        const tutorcollection = request.app.get("tutorcollection");
+        const usercollection = request.app.get("usercollection");
+        const { tutorId, studentUsername } = request.body;
+
+        // Find the tutor and student documents
+        const tutor = await tutorcollection.findOne({ username: tutorId });
+        const student = await usercollection.findOne({ username: studentUsername });
+
+        if (!tutor || !student) {
+            return response.status(404).send({ message: "Tutor or student not found" });
+        }
+
+        // Check if the student's username is in the tutor's Requests array
+        const studentIndex = tutor.Requests.indexOf(studentUsername);
+        if (studentIndex === -1) {
+            return response.status(400).send({ message: "Request not found" });
+        }
+
+        // Move student's username from Requests to Students in the tutor's document
+        tutor.Requests.splice(studentIndex, 1);
+        if (!tutor.Students) {
+            tutor.Students = [];
+        }
+        tutor.Students.push(studentUsername);
+
+        // Add the tutor's username to the student's Tutors array
+        if (!student.Tutors) {
+            student.Tutors = [];
+        }
+        student.Tutors.push(tutorId);
+
+        // Update tutor and student documents
+        await tutorcollection.updateOne({ username: tutorId }, { $set: { Requests: tutor.Requests, Students: tutor.Students } });
+        await usercollection.updateOne({ username: studentUsername }, { $set: { Tutors: student.Tutors } });
+
+        return response.send({ message: "Request accepted successfully",payload:tutor.Requests });
+    } catch (error) {
+        console.error(error);
+        return response.status(500).send({ message: "Internal server error" });
+    }
+}));
+
+// Handle rejecting a request
+Tutorapp.post('/reject-request', expressAsyncHandler(async (request, response) => {
+    try {
+        const tutorcollection = request.app.get("tutorcollection");
+        const { tutorId, studentUsername } = request.body;
+
+        // Find the tutor document
+        const tutor = await tutorcollection.findOne({ username: tutorId });
+
+        if (!tutor) {
+            return response.status(404).send({ message: "Tutor not found" });
+        }
+
+        // Check if the student's username is in the tutor's Requests array
+        const studentIndex = tutor.Requests.indexOf(studentUsername);
+        if (studentIndex === -1) {
+            return response.status(400).send({ message: "Request not found" });
+        }
+
+        // Remove the student's username from the Requests array
+        tutor.Requests.splice(studentIndex, 1);
+
+        // Update the tutor document
+        await tutorcollection.updateOne({ username: tutorId }, { $set: { Requests: tutor.Requests } });
+
+        return response.send({ message: "Request rejected successfully",payload:tutor.Requests});
+    } catch (error) {
+        console.error(error);
+        return response.status(500).send({ message: "Internal server error" });
+    }
+}));
+
+// ...
+
+
+
+  
+  
 
 
 

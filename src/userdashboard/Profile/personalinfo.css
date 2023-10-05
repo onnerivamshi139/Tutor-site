@@ -1,0 +1,44 @@
+/* Personalinfo.css */
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4; /* Set your desired background color */
+  }
+  
+  .profile-card {
+    width: 50rem;
+    
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff; /* Set the card background color */
+  }
+  
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 20px; /* Center the profile picture and add margin */
+  }
+  
+  .profile-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .profile-text {
+    font-size: 1rem;
+    color: #555; /* Adjust the text color */
+  }
+  
+  .edit-button {
+    margin-top: 20px;
+  }
+  
+  /* Additional styling can be added for buttons or other elements */
+  

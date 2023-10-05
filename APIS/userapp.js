@@ -63,6 +63,7 @@ Userapp.post('/login',expressAsyncHandler(async(request,response)=>{
 
             let token=jwt.sign({username:userofDB.username},"abcedef",{expiresIn:60})
             //send token
+            
             response.send({message:"login success",payload:token,userObj:userofDB})
         }
     }

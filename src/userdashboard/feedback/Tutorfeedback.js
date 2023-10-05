@@ -8,13 +8,17 @@ import Button from 'react-bootstrap/Button';
 import { Card } from "react-bootstrap";
 import { useEffect } from "react";
 import './Tutorfeedback.css';
+import {  useSelector } from 'react-redux/es/hooks/useSelector';
+import { BiSolidQuoteAltLeft } from "react-icons/bi";
 
 function Tutorfeedback() {
   const { tutorId } = useParams();
   const [tutor, setTutor] = useState([]);
   const [feedback, setFeedback] = useState("");
   const [feedbackList, setFeedbackList] = useState([]);
-  
+
+
+  const {userobj}=useSelector(state=>state.user);
   useEffect(() => {
     axios.get(`http://localhost:4000/tutor-api/getusers/${tutorId}`)
       .then(response => {
@@ -31,11 +35,16 @@ function Tutorfeedback() {
     // Make a POST request to submit feedback
     axios.post(`http://localhost:4000/tutor-api/submit-feedback/${tutorId}`, {
       feedback: feedback,
+      username:userobj.username,
     })
     .then(response => {
       // Handle success, e.g., show a confirmation message
       //setIsFeedbackSubmitted(true);
-      setFeedbackList(prevFeedbackList => [...prevFeedbackList, feedback]); // Use a callback to update the state
+      // Use a callback to update the state
+      setFeedbackList(prevFeedbackList => [
+        ...prevFeedbackList,
+        { text: feedback, username: userobj.username },
+      ]);
       setFeedback("");
       alert("Feedback submitted successfully");
     })
@@ -52,23 +61,52 @@ function Tutorfeedback() {
      
       <h2>Tutor Profile</h2>
 
-      <Card className='mx-auto mt-3'>
-  <Card.Body className="m-3">
-    <Card.Img variant="top" src={tutor.profileImg} className="profile-img" />
-    <Card.Title>{tutor.username}</Card.Title>
-    <Card.Text>
-      Email: {tutor.email}
-    </Card.Text>
-    <Card.Text>
-      City: {tutor.city}
-    </Card.Text>
-  </Card.Body>
-</Card>
+      <Card style={{ width: '100' }} className='mx-auto mt-3'>
+                <Card.Body className="m-3">
+                  <Card.Img className="profile-img" variant="top" src={tutor.profileImg}  />
+                  <Card.Title>
+                    <h3>{tutor.username}</h3>
+                    </Card.Title>
+                  <Card.Text>
+                    <b>Email : </b> {tutor.email}
+                  </Card.Text>
+                  <Card.Text>
+                    <b>mobile : </b> {tutor.mobileNumber }
+                  </Card.Text>
+                  <Card.Text>
+                    <b>city :</b>  {tutor.city},{tutor.address}
+                  </Card.Text>
+                  <Card.Text>
+                   <b>subjects :</b>{tutor.subjects}
+                  </Card.Text>
+                  
+                </Card.Body>
+              </Card>
+
+<div className="feedback-card-container">
+        
+        {feedbackList.length === 0 ? (
+          <p>No feedback yet.</p>
+        ) : (
+          feedbackList.map((feedbackItem, index) => (
+            <Card key={index} className="mb-3">
+              <Card.Body>
+                <div className="feedback-icon">
+                  <BiSolidQuoteAltLeft/>
+                </div>
+                
+              <Card.Text className="feedback-text">{feedbackItem.text}</Card.Text>
+                <Card.Text>-{feedbackItem.username}</Card.Text>
+              </Card.Body>
+            </Card>
+          ))
+        )}
+      </div>
 
 <div className="feedback-form">
   <Form>
     <Form.Group controlId="feedback">
-      <Form.Label>Give Feedback</Form.Label>
+      <Form.Label></Form.Label>
       <Form.Control
         as="textarea"
         rows={3}
@@ -84,18 +122,7 @@ function Tutorfeedback() {
 </div>
 
         
-<div className="feedback-list">
-        <h3>Feedback</h3>
-        {feedbackList.length === 0 ? (
-          <p>No feedback yet.</p>
-        ) : (
-          feedbackList.map((feedbackItem, index) => (
-            <Card key={index} className="mb-3">
-              <Card.Body>{feedbackItem}</Card.Body>
-            </Card>
-          ))
-        )}
-      </div>
+
     </div>
   );
 }
