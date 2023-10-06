@@ -41,6 +41,20 @@ Userapp.get('/getusers',expressAsyncHandler(async(request,response)=>{
     let users=await usercollection.find().toArray()
     response.send({message:'all users',payload:users})
 }));
+
+Userapp.get('/getusers/:id',expressAsyncHandler(async(request,response)=>{
+    let pid=request.params.id;
+    let usercollection=request.app.get("usercollection");
+    let user=await usercollection.findOne({username:pid})
+    if(user==null)
+    {
+        response.send('user not existed')
+    }
+    else{
+        response.send({message:'users found',payload:user})
+    }
+}));
+
 Userapp.post('/login',expressAsyncHandler(async(request,response)=>{
     let usercollection=request.app.get("usercollection")
     //user credintials fron client 
@@ -89,48 +103,45 @@ expressAsyncHandler(async(request,response)=>{
     }
 }));
 
-// Add this route to your Express API
-Userapp.post('/update-user', expressAsyncHandler(async (request, response) => {
-    const usercollection = request.app.get("usercollection");
-    const updatedUser = request.body;
-  
+
+
+Userapp.post('/update-user/:id', upload.single("profilePicture"), expressAsyncHandler(async (request, response) => {
     try {
-      await usercollection.updateOne(
-        { username: updatedUser.username },
-        { $set: { email: updatedUser.email, city: updatedUser.city } }
-      );
-      
-      response.send({ message: "User details updated successfully" });
+        const usercollection = request.app.get("usercollection");
+        const userId = request.params.id;
+
+        // Get the tutor's existing details
+        const existingUser = await usercollection.findOne({ username: userId });
+
+        if (!existingUser) {
+            return response.status(404).send({ message: "User not found" });
+        }
+
+        // Get the updated details from the request
+        const { mobileNumber, subjects, address } = request.body;
+
+        // Create a new tutor object with updated details
+        const updatedUser = {
+            ...existingUser,
+            mobileNumber,
+            subjects,
+            address,
+        };
+
+        // Update the profile picture if a new one is uploaded
+        if (request.file) {
+            updatedUser.profileImg = request.file.path;
+        }
+
+        // Update the tutor's document with the new details
+        await usercollection.updateOne({ username: userId }, { $set: updatedUser });
+
+        return response.send({ message: "User details updated successfully" });
     } catch (error) {
-      response.status(500).send({ message: "An error occurred while updating user details" });
+        console.error(error);
+        return response.status(500).send({ message: "Internal server error" });
     }
-  }));
+}));
 
-  // Add a new route to handle tutor requests
-// Userapp.post('/send-request', expressAsyncHandler(async (request, response) => {
-//     const { tutorId ,userId} = request.body;
-//     const requestcollection = request.app.get("requestcollection");
-  
-//     // Save the request in your database or storage
-//     // Here, we'll assume you have a tutorRequestsCollection
-//     await requestcollection.insertOne({ tutorId, userId });
-  
-//     response.send({ message: 'Request sent successfully' });
-//   }));
-// Userapp.post('/send-request', expressAsyncHandler(async (request, response) => {
-//   const req = request.body;
-//   const requestcollection = request.app.get("requestcollection");
-
-//   console.log(req)
-//   try{
-//     await requestcollection.insertOne(req);
-
-//   response.send({ message: 'Request sent successfully' });
-//   }catch(error){
-//     response.status(500).send({ message: "An error occurred while updating user details" });
-//   }
-// }));
-
-  
-
+// Add this route to your Express API
 module.exports=Userapp; 

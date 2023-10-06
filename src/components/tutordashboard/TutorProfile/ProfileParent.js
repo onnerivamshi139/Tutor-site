@@ -3,10 +3,10 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Nav from 'react-bootstrap/Nav';
 import { useSelector } from 'react-redux';
-import './personalinfo.css'; // Import your custom CSS for styling
+import './ProfileParent.css'
 import { useNavigate, Outlet } from 'react-router-dom';
 
-function Personalinfo() {
+function ProfileParent() {
   const { userobj, isSuccess } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -15,21 +15,21 @@ function Personalinfo() {
       <div className="profile-sidebar">
         <Nav className="flex-column">
         <Nav.Item>
-            <Nav.Link onClick={() => navigate('/Userdashboard/personalinfo/profile')}>
+            <Nav.Link onClick={() => navigate('/dashboard/profileparent/tutorprofile')}>
               Profile
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link onClick={() => navigate('/Userdashboard/personalinfo/updatedetails')}>
-              Update Details
+            <Nav.Link onClick={() => navigate('/dashboard/profileparent/extradetails')}>
+              EXtradetails Details
             </Nav.Link>
           </Nav.Item>
           
-          <Nav.Item>
+          {/* <Nav.Item>
             <Nav.Link onClick={() => navigate('/Userdashboard/personalinfo/requirements')}>
               Requirements
             </Nav.Link>
-          </Nav.Item>
+          </Nav.Item> */}
         </Nav>
       </div>
       <div className="profile-content">
@@ -40,4 +40,4 @@ function Personalinfo() {
   );
 }
 
-export default Personalinfo;
+export default ProfileParent;

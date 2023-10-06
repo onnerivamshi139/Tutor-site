@@ -29,7 +29,16 @@ export const userLogin=createAsyncThunk('loginuser',async(usercred,thunkApi)=>{
         return thunkApi.rejectWithValue(data); 
 
     }
-})
+});
+
+export const updateuser = createAsyncThunk('updateuser', async (formData) => {
+    try {
+      const response = await axios.post(`http://localhost:4000/user-api/update-user/${formData.username}`, formData);
+      return response.data.payload;
+    } catch (error) {
+      throw error;
+    }
+  });
 
 let userSlice=createSlice({
     name:'user',
@@ -70,7 +79,10 @@ let userSlice=createSlice({
             state.isLoading=false;
             state.isSuccess=false;
             state.errMsg='error occured'
-        }
+        },
+        [updateuser.fulfilled]: (state, action) => {
+            state.userobj = action.payload;
+          },
     }
 })
 

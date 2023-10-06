@@ -1,44 +1,82 @@
-/* Personalinfo.css */
+/* Updated CSS for the profile container */
+  /* personalinfo.css */
 
 .profile-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4; /* Set your desired background color */
+  display: flex;
+  height: 100vh; /* Adjust the height as needed */
+}
+
+.profile-sidebar {
+  flex: 0 0 250px; /* Set the width of the sidebar */
+  background-color: #333; /* Set the background color */
+  color: #fff; /* Set text color */
+  padding: 20px;
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+.profile-sidebar a {
+  text-decoration: none;
+  color: #fff; /* Link text color */
+}
+
+.profile-sidebar a:hover {
+  color: #007bff; /* Link text color on hover */
+}
+
+.profile-content {
+  flex: 1; /* Take up remaining horizontal space */
+  padding: 20px;
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  background-color: #f0f0f0; /* Set the background color of the content area */
+}
+
+  .profile-content .container {
+    max-width: 100%; /* Ensure the content container expands to the available space */
   }
+  
+  
+  
   
   .profile-card {
-    width: 50rem;
-    
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+    background-color: #f9f9f9; /* Background color for the profile card */
+    border: 1px solid #ddd; /* Border around the card */
     padding: 20px;
-    background-color: #fff; /* Set the card background color */
-  }
-  
-  .profile-pic {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin: 0 auto 20px; /* Center the profile picture and add margin */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for the card */
   }
   
   .profile-title {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-pic {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
   }
   
   .profile-text {
-    font-size: 1rem;
-    color: #555; /* Adjust the text color */
+    font-size: 16px;
+    margin-bottom: 10px;
   }
   
   .edit-button {
-    margin-top: 20px;
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition for background color */
   }
   
-  /* Additional styling can be added for buttons or other elements */
+  .edit-button:hover {
+    background-color: #0056b3; /* Background color on hover */
+  }
+  
+  /* Media query for responsiveness (adjust as needed) */
+  @media (max-width: 768px) {
+    .profile-sidebar {
+      width: 100%; /* Make the sidebar full width on smaller screens */
+    }
+  }
   
