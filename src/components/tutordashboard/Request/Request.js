@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import './request.css';
+import './Request.css';
 
 function Request() {
   const { tutorobj } = useSelector((state) => state.tutor);
@@ -13,6 +13,7 @@ function Request() {
       .then(response => {
         const tutorDetails = response.data.payload;
         const requestsArray = tutorDetails.Requests || [];
+  
         setRequests(requestsArray);
       })
       .catch(error => {
@@ -22,7 +23,7 @@ function Request() {
 
   const handleAccept = (studentUsername) => {
     // Implement the logic to accept the request
-    axios.post(`http://localhost:4000/tutor-api/accept-request`, {
+    axios.post("http://localhost:4000/tutor-api/accept-request", {
       tutorId: tutorobj.username,
       studentUsername: studentUsername
     })

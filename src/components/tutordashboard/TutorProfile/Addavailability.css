@@ -1,0 +1,39 @@
+/* Addavailability.css */
+
+/* Style the container */
+.add-availability-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow */
+    max-width: 400px; /* Decrease container width */
+    margin: 0 auto; /* Center the container horizontally */
+  }
+  
+  /* Style the form */
+  .add-availability-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Style the form groups */
+  .add-availability-container .form-group {
+    margin-bottom: 10px; /* Decrease bottom margin for form groups */
+    max-width: 300px; /* Decrease form group width */
+    color: #333; /* Darken the text color of form groups */
+  }
+  
+  /* Style the checkboxes and labels */
+  .add-availability-container .form-check-label {
+    display: flex; /* Display labels and checkboxes side by side */
+    align-items: center; /* Vertically center items */
+    margin-bottom: 0; /* Remove bottom margin to control spacing with margin on form-group */
+  }
+  
+  .add-availability-container .form-check-input {
+    margin-right: 10px; /* Add space between checkbox and label */
+    align-self: center; /* Center the checkbox vertically within the label */
+  }
+  

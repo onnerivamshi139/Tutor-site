@@ -11,7 +11,7 @@ function Personalinfo() {
   const navigate = useNavigate();
 
   return (
-    <div className="profile-container">
+    <div className="profile-container-nav">
       <div className="profile-sidebar">
         <Nav className="flex-column">
         <Nav.Item>

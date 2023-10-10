@@ -53,36 +53,46 @@ function Tutorfeedback() {
       console.error('Error submitting feedback:', error);
     });
   };
-
+  const sendRequest = (username) => {
+    // Make a POST request to send the request to the tutor
+    axios.post('http://localhost:4000/tutor-api/send-request', {
+      tutorId: username,
+      userobj: userobj,
+    })
+    .then(response => {
+      // Handle success, e.g., show a confirmation message
+      alert("Request sent successfully");
+    })
+    .catch(error => {
+      // Handle error
+      console.error('Error sending request:', error);
+    });
+  };
   // Fetch tutor details using another axios request, similar to what you did in the Tutors component
 
   return (
     <div className="tutor-profile-container">
-     
-      <h2>Tutor Profile</h2>
+     <div className="profile-container">
+  <div className="profile-img-container">
+    <img className="profile-img" src={tutor.profileImg} alt="Tutor Profile" />
+  </div>
+  <div className="profile-details">
+    <h3>{tutor.username}</h3>
+    <p><b>Email:</b> {tutor.email}</p>
+    <p><b>Mobile:</b> {tutor.mobileNumber}</p>
+    <p><b>City:</b> {tutor.city}, {tutor.address}</p>
+    <p><b>Subjects:</b> {tutor.subjects}</p>
+    <Button
+      variant="primary"
+      onClick={() => sendRequest(tutor.username)}
+      disabled={tutor.Requests && tutor.Requests.includes(userobj.username)}
+    >
+      {tutor.Requests && tutor.Requests.includes(userobj.username) ? 'Request Sent' : 'Request'}
+    </Button>
+  </div>
+</div>
 
-      <Card style={{ width: '100' }} className='mx-auto mt-3'>
-                <Card.Body className="m-3">
-                  <Card.Img className="profile-img" variant="top" src={tutor.profileImg}  />
-                  <Card.Title>
-                    <h3>{tutor.username}</h3>
-                    </Card.Title>
-                  <Card.Text>
-                    <b>Email : </b> {tutor.email}
-                  </Card.Text>
-                  <Card.Text>
-                    <b>mobile : </b> {tutor.mobileNumber }
-                  </Card.Text>
-                  <Card.Text>
-                    <b>city :</b>  {tutor.city},{tutor.address}
-                  </Card.Text>
-                  <Card.Text>
-                   <b>subjects :</b>{tutor.subjects}
-                  </Card.Text>
-                  
-                </Card.Body>
-              </Card>
-
+<div className="feedback-container">
 <div className="feedback-card-container">
         
         {feedbackList.length === 0 ? (
@@ -120,7 +130,7 @@ function Tutorfeedback() {
     </Button>
   </Form>
 </div>
-
+</div>
         
 
     </div>

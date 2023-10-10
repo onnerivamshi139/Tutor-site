@@ -1,7 +1,7 @@
 /* Updated CSS for the profile container */
   /* personalinfo.css */
 
-.profile-container {
+.profile-container-nav {
   display: flex;
   height: 100vh; /* Adjust the height as needed */
 }

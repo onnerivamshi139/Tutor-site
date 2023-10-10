@@ -1,7 +1,7 @@
 /* Updated CSS for the profile container */
   /* personalinfo.css */
 
-  .profile-container {
+  .profile-container-nav {
     display: flex;
     height: 100vh; /* Adjust the height as needed */
   }
@@ -79,4 +79,19 @@
         width: 100%; /* Make the sidebar full width on smaller screens */
       }
     }
-    
+
+    /* Custom styles for nav-item */
+/* Custom styles for Nav.Item elements */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Increase the gap between icon and text */
+  font-size: 18px;
+  margin-bottom: 16px;  /* Increase text size */
+}
+
+/* Custom styles for icons within Nav.Item */
+.nav-item svg {
+  font-size: 24px; /* Increase icon size */
+}
+

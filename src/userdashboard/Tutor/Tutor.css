@@ -25,7 +25,7 @@
   margin: 10px; /* Add margin to create spacing between cards */
   overflow: hidden; /* Hide any content overflow */
   border-radius: 10px; /* Add rounded corners to the card */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow for depth */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
 }
 
 .tutor-card:hover {
@@ -33,11 +33,10 @@
 }
 
 .profile-img {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
- border-radius: 50%; /* Rounded top-right corner for the image */
-}
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Make profile images circular */
+} 
 
 /* Style the card background colors alternately */
 .tutor-card:nth-child(odd) .profile-img {

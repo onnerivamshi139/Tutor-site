@@ -31,6 +31,9 @@ import Requirements from './userdashboard/Profile/Requirements/Requirements';
 import Profile from './userdashboard/Profile/Profile';
 import TutorProfile from './components/tutordashboard/TutorProfile/TutotProfile';
 import ProfileParent from './components/tutordashboard/TutorProfile/ProfileParent';
+import TutorHome from './components/tutordashboard/TutorProfile/TutorHome';
+import Students from './components/tutordashboard/TutorProfile/Students';
+import Addavailability from './components/tutordashboard/TutorProfile/Addavailability';
 import './App.css';
 
 
@@ -153,13 +156,16 @@ function App() {
           <Route path="tutordashboard" element={<Tutordashboard />} />
           <Route path="request" element={<Request/>} />
           <Route path="profileparent" element={<ProfileParent/>}>
+              <Route path="addavailability" element={<Addavailability />} />
+              <Route path="tutorhome" element={<TutorHome />} />
+              <Route path="students" element={<Students />} />
               <Route path="extradetails" element={<EXtradetails />} />
               <Route path="tutorprofile" element={<TutorProfile/>} />
               <Route path="" element={<Navigate to="tutorprofile" />} />
           </Route>
           
           
-          <Route path="" element={<Navigate to="tutotprofile" replace />} />
+          <Route path="" element={<Navigate to="request" replace />} />
         </Route>
 
 

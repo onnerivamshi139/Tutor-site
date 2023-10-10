@@ -27,6 +27,14 @@ export const updateTutor = createAsyncThunk('updatetutor', async (formData) => {
     throw error;
   }
 });
+export const addavailabilityexperience = createAsyncThunk('add-availability-experience', async (formData) => {
+  try {
+    const response = await axios.post(`http://localhost:4000/tutor-api/add-availability-experience/${formData.username}`, formData);
+    return response.data.payload;
+  } catch (error) {
+    throw error;
+  }
+});
 
 let tutorSlice = createSlice({
   name: 'tutor',
@@ -63,6 +71,9 @@ let tutorSlice = createSlice({
       state.errMsg = action.payload.message;
     },
     [updateTutor.fulfilled]: (state, action) => {
+      state.tutorobj = action.payload;
+    },
+    [addavailabilityexperience.fulfilled]: (state, action) => {
       state.tutorobj = action.payload;
     },
   },

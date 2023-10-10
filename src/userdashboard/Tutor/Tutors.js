@@ -34,21 +34,7 @@ function Tutors() {
     }
   }, [city, tutors]);
 
-  const sendRequest = (username) => {
-    // Make a POST request to send the request to the tutor
-    axios.post('http://localhost:4000/tutor-api/send-request', {
-      tutorId: username,
-      userobj: userobj,
-    })
-    .then(response => {
-      // Handle success, e.g., show a confirmation message
-      alert("Request sent successfully");
-    })
-    .catch(error => {
-      // Handle error
-      console.error('Error sending request:', error);
-    });
-  };
+ 
 
   return (
     <div className="tutors-container">
@@ -75,12 +61,8 @@ function Tutors() {
                   <Card.Title>
                     <h3>{tutor.username}</h3>
                     </Card.Title>
-                  <Card.Text>
-                    <b>Email : </b> {tutor.email}
-                  </Card.Text>
-                  <Card.Text>
-                    <b>mobile : </b> {tutor.mobileNumber }
-                  </Card.Text>
+              
+                    
                   <Card.Text>
                     <b>city :</b>  {tutor.city},{tutor.address}
                   </Card.Text>
@@ -88,13 +70,7 @@ function Tutors() {
                    <b>subjects :</b>{tutor.subjects}
                   </Card.Text>
                   
-                  <Button
-                    variant="primary"
-                    onClick={() => sendRequest(tutor.username)}
-                    disabled={tutor.Requests && tutor.Requests.includes(userobj.username)}
-                  >
-                    {tutor.Requests && tutor.Requests.includes(userobj.username) ? 'Request Sent' : 'Request'}
-                  </Button>
+                  
                 </Card.Body>
               </Card>
             </NavLink>

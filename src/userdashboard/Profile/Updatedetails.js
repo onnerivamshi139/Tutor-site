@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from "react-redux";
 
 import Card from 'react-bootstrap/Card';
-import { updateTutor } from "../../Slice/tutorSlice";
+import { updateuser } from "../../Slice/userSlice";
 function Updatedetails() {
   const { userobj } = useSelector((state) => state.user);
    const dispatch=useDispatch();
@@ -53,7 +53,7 @@ function Updatedetails() {
       .post(`http://localhost:4000/user-api/update-user/${userobj.username}`, formData)
       .then((response) => {
         
-        dispatch(updateTutor(response.data.payload));
+        dispatch(updateuser(response.data.payload));
         alert("user details updated successfully");
         // Disable edit mode after successful update
         

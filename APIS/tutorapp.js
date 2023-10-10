@@ -246,50 +246,57 @@ Tutorapp.get('/get-requests', expressAsyncHandler(async (request, response) => {
 // ...
 
 // Handle accepting a request
-Tutorapp.post('/accept-request', expressAsyncHandler(async (request, response) => {
+Tutorapp.post('/accept-request', expressAsyncHandler(async (req, response) => {
     try {
-        const tutorcollection = request.app.get("tutorcollection");
-        const usercollection = request.app.get("usercollection");
-        const { tutorId, studentUsername } = request.body;
+      const tutorcollection = req.app.get("tutorcollection");
+      const usercollection = req.app.get("usercollection");
+      const { tutorId, studentUsername } = req.body;
+  
+      // Find the tutor and student documents
+      const tutor = await tutorcollection.findOne({ username: tutorId });
+      const student = await usercollection.findOne({ username: studentUsername });
+  
+      if (!tutor) {
+        return response.status(404).send({ message: "Tutor not found" });
+      }
+  
+      if (!student) {
+        return response.status(404).send({ message: "Student not found" });
+      }
+  
+      // Check if the student's username is in the tutor's Requests array
+    //   const studentIndex = tutor.Requests.indexOf(studentUsername);
+      const studentIndex = tutor.Requests.findIndex(request => request.username === studentUsername);
 
-        // Find the tutor and student documents
-        const tutor = await tutorcollection.findOne({ username: tutorId });
-        const student = await usercollection.findOne({ username: studentUsername });
-
-        if (!tutor || !student) {
-            return response.status(404).send({ message: "Tutor or student not found" });
-        }
-
-        // Check if the student's username is in the tutor's Requests array
-        const studentIndex = tutor.Requests.indexOf(studentUsername);
-        if (studentIndex === -1) {
-            return response.status(400).send({ message: "Request not found" });
-        }
-
-        // Move student's username from Requests to Students in the tutor's document
-        tutor.Requests.splice(studentIndex, 1);
-        if (!tutor.Students) {
-            tutor.Students = [];
-        }
-        tutor.Students.push(studentUsername);
-
-        // Add the tutor's username to the student's Tutors array
-        if (!student.Tutors) {
-            student.Tutors = [];
-        }
-        student.Tutors.push(tutorId);
-
-        // Update tutor and student documents
-        await tutorcollection.updateOne({ username: tutorId }, { $set: { Requests: tutor.Requests, Students: tutor.Students } });
-        await usercollection.updateOne({ username: studentUsername }, { $set: { Tutors: student.Tutors } });
-
-        return response.send({ message: "Request accepted successfully",payload:tutor.Requests });
+      if (studentIndex === -1) {
+        return response.status(400).send({ message: "Request not found" });
+      }
+  
+      // Move the student's username from Requests to Students in the tutor's document
+      tutor.Requests.splice(studentIndex, 1);
+  
+      if (!tutor.Students) {
+        tutor.Students = [];
+      }
+      tutor.Students.push(studentUsername);
+  
+      // Add the tutor's username to the student's Tutors array
+      if (!student.Tutors) {
+        student.Tutors = [];
+      }
+      student.Tutors.push(tutorId);
+  
+      // Update tutor and student documents
+      await tutorcollection.updateOne({ username: tutorId }, { $set: { Requests: tutor.Requests, Students: tutor.Students } });
+      await usercollection.updateOne({ username: studentUsername }, { $set: { Tutors: student.Tutors } });
+  
+      return response.send({ message: "Request accepted successfully", payload: tutor.Requests });
     } catch (error) {
-        console.error(error);
-        return response.status(500).send({ message: "Internal server error" });
+      console.error(error);
+      return response.status(500).send({ message: "Internal server error" });
     }
-}));
-
+  }));
+  
 // Handle rejecting a request
 Tutorapp.post('/reject-request', expressAsyncHandler(async (request, response) => {
     try {
@@ -304,7 +311,7 @@ Tutorapp.post('/reject-request', expressAsyncHandler(async (request, response) =
         }
 
         // Check if the student's username is in the tutor's Requests array
-        const studentIndex = tutor.Requests.indexOf(studentUsername);
+        const studentIndex = tutor.Requests.findIndex(request => request.username === studentUsername);
         if (studentIndex === -1) {
             return response.status(400).send({ message: "Request not found" });
         }
@@ -322,13 +329,49 @@ Tutorapp.post('/reject-request', expressAsyncHandler(async (request, response) =
     }
 }));
 
+
+// Import necessary libraries and middleware
+// ...
+
+// Handle adding availability and experience details
+Tutorapp.post('/add-availability-experience/:id', expressAsyncHandler(async (request, response) => {
+    try {
+      const tutorcollection = request.app.get("tutorcollection");
+      const tutorId = request.params.id;
+  
+      // Find the tutor document by ID
+      const tutor = await tutorcollection.findOne({ username: tutorId });
+  
+      if (!tutor) {
+        return response.status(404).send({ message: "Tutor not found" });
+      }
+  
+      // Get the availability and experience details from the request body
+      const { selectedDays, selectedTimeSlot, experienceYears, experienceMonths } = request.body;
+  
+      // Update the tutor's document with the new details
+      tutor.selectedDays = selectedDays;
+      tutor.selectedTimeSlot = selectedTimeSlot;
+      tutor.experienceYears = experienceYears;
+      tutor.experienceMonths = experienceMonths;
+  
+      await tutor.save(); // Save the updated tutor document
+  
+      return response.send({ message: "Availability and experience details added successfully" });
+    } catch (error) {
+      console.error(error);
+      return response.status(500).send({ message: "Internal server error" });
+    }
+  }));
+  
+
+// Export the Tutorapp router
+module.exports = Tutorapp;
+
+
 // ...
 
 
 
   
   
-
-
-
-module.exports=Tutorapp; 

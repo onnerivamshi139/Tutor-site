@@ -1,0 +1,35 @@
+/* Custom styles for accordion header */
+.accordion-header {
+    font-weight: 700;
+    font-size: 16px;
+    padding-left: 12px;
+  }
+  
+  /* Custom styles for accordion body */
+  .accordion-body {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 130%;
+    margin-top: 8px;
+  }
+  /* Adjust the position of welcome text and "Get started" to the left */
+.tutor-home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  /* Decrease the width of the accordion */
+  .accordion {
+    max-width: 400px; /* Adjust the width as needed */
+    width: 100%;
+  }
+
+  /* Custom styles for the accordion with shadow */
+.custom-shadow {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* Add shadow effect */
+  }
+  
+  
+  
