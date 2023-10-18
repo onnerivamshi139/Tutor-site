@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { tutorLogin } from '../../Slice/tutorSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import './login.css'; // Import the Login.css file
 
 function TutorLogin() {
@@ -18,7 +20,7 @@ function TutorLogin() {
   let { userobj, isError, isLoading, isSuccesstutor, errMsg } = useSelector((state) => state.tutor);
 
   if (isSuccesstutor === true) {
-    navigate('/tutordashboard');
+    navigate('/dashboard');
   }
 
   let dispatch = useDispatch();
@@ -39,7 +41,7 @@ function TutorLogin() {
       
       <Form className='login-form' onSubmit={handleSubmit(onFormSubmit)}>
         <Form.Group className='login-form-group'>
-          <Form.Label className='login-form-label'>Username</Form.Label>
+          <Form.Label className='login-form-label'><FontAwesomeIcon icon={faUser} /> Username</Form.Label>
           <Form.Control
             type='text'
             placeholder='Enter Username'
@@ -49,7 +51,7 @@ function TutorLogin() {
         </Form.Group>
 
         <Form.Group className='login-form-group'>
-          <Form.Label className='login-form-label'>Password</Form.Label>
+          <Form.Label className='login-form-label'>  <FontAwesomeIcon icon={faLock} /> Password</Form.Label>
           <Form.Control
             type='password'
             placeholder='Password'

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import axios from 'axios';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -59,7 +58,7 @@ export default function AddAvailability() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     // Create a JSON object with the form data
     const formData = {
       selectedDays,
@@ -67,22 +66,26 @@ export default function AddAvailability() {
       experienceYears,
       experienceMonths,
     };
-  
+
     axios
-      .post(`http://localhost:4000/tutor-api/add-availability-experience/${tutorobj.username}`, formData, {
-        headers: {
-          'Content-Type': 'application/json', // Set the content type to JSON
-        },
-      })
+      .post(
+        `http://localhost:4000/tutor-api/add-availability-experience/${tutorobj.username}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json', // Set the content type to JSON
+          },
+        }
+      )
       .then((response) => {
         dispatch(addavailabilityexperience(response.data.payload));
-        alert('Tutor details updated successfully');
+        alert('Tutor availability and experience updated successfully');
       })
       .catch((error) => {
         console.error('Error updating tutor details:', error);
       });
   };
-  
+
   return (
     <Container className="add-availability-container">
       <h2>Add Availability and Experience</h2>

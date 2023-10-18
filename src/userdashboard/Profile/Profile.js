@@ -10,7 +10,7 @@ function Profile() {
   const { userobj } = useSelector((state) => state.user);
    const navigate=useNavigate();
  const Toeditdeatils=()=>{
- navigate('n/Userdashboard/personalinfo/updatedetails');
+ navigate('/Userdashboard/personalinfo/updatedetails');
  } 
   return (
     <div className="tutor-profile-container">

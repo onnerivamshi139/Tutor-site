@@ -145,7 +145,7 @@ Tutorapp.post('/submit-feedback/:id', expressAsyncHandler(async (request, respon
     try {
         const tutorcollection = request.app.get("tutorcollection");
         const tutorId = request.params.id;
-        const { feedback,username} = request.body;
+        const { feedback,username,profileImg} = request.body;
 
         // Find the tutor by ID
         const tutor = await tutorcollection.findOne({ username: tutorId });
@@ -158,7 +158,7 @@ Tutorapp.post('/submit-feedback/:id', expressAsyncHandler(async (request, respon
         if (!tutor.feedback) { 
             tutor.feedback = [];
         }
-        tutor.feedback.push({text:feedback, username:username});
+        tutor.feedback.push({text:feedback, username:username,profileImg:profileImg});
 
         // Update the tutor's document with the new feedback
         await tutorcollection.updateOne({ username: tutorId }, { $set: { feedback: tutor.feedback } });
@@ -250,11 +250,11 @@ Tutorapp.post('/accept-request', expressAsyncHandler(async (req, response) => {
     try {
       const tutorcollection = req.app.get("tutorcollection");
       const usercollection = req.app.get("usercollection");
-      const { tutorId, studentUsername } = req.body;
+      const { tutorId, studentobj } = req.body;
   
       // Find the tutor and student documents
       const tutor = await tutorcollection.findOne({ username: tutorId });
-      const student = await usercollection.findOne({ username: studentUsername });
+      const student = await usercollection.findOne({ username: studentobj.username });
   
       if (!tutor) {
         return response.status(404).send({ message: "Tutor not found" });
@@ -266,7 +266,7 @@ Tutorapp.post('/accept-request', expressAsyncHandler(async (req, response) => {
   
       // Check if the student's username is in the tutor's Requests array
     //   const studentIndex = tutor.Requests.indexOf(studentUsername);
-      const studentIndex = tutor.Requests.findIndex(request => request.username === studentUsername);
+      const studentIndex = tutor.Requests.findIndex(request => request.username === studentobj.username);
 
       if (studentIndex === -1) {
         return response.status(400).send({ message: "Request not found" });
@@ -278,7 +278,7 @@ Tutorapp.post('/accept-request', expressAsyncHandler(async (req, response) => {
       if (!tutor.Students) {
         tutor.Students = [];
       }
-      tutor.Students.push(studentUsername);
+      tutor.Students.push(studentobj);
   
       // Add the tutor's username to the student's Tutors array
       if (!student.Tutors) {
@@ -301,7 +301,7 @@ Tutorapp.post('/accept-request', expressAsyncHandler(async (req, response) => {
 Tutorapp.post('/reject-request', expressAsyncHandler(async (request, response) => {
     try {
         const tutorcollection = request.app.get("tutorcollection");
-        const { tutorId, studentUsername } = request.body;
+        const { tutorId, studentobj } = request.body;
 
         // Find the tutor document
         const tutor = await tutorcollection.findOne({ username: tutorId });
@@ -311,7 +311,7 @@ Tutorapp.post('/reject-request', expressAsyncHandler(async (request, response) =
         }
 
         // Check if the student's username is in the tutor's Requests array
-        const studentIndex = tutor.Requests.findIndex(request => request.username === studentUsername);
+        const studentIndex = tutor.Requests.findIndex(request => request.username === studentobj.username);
         if (studentIndex === -1) {
             return response.status(400).send({ message: "Request not found" });
         }
@@ -334,36 +334,83 @@ Tutorapp.post('/reject-request', expressAsyncHandler(async (request, response) =
 // ...
 
 // Handle adding availability and experience details
-Tutorapp.post('/add-availability-experience/:id', expressAsyncHandler(async (request, response) => {
-    try {
-      const tutorcollection = request.app.get("tutorcollection");
-      const tutorId = request.params.id;
+Tutorapp.post(
+    '/add-availability-experience/:id',
+    expressAsyncHandler(async (request, response) => {
+      try {
+        const tutorcollection = request.app.get('tutorcollection');
+        const tutorId = request.params.id;
   
-      // Find the tutor document by ID
-      const tutor = await tutorcollection.findOne({ username: tutorId });
+        // Get the tutor's existing details
+        const existingTutor = await tutorcollection.findOne({ username: tutorId });
   
-      if (!tutor) {
-        return response.status(404).send({ message: "Tutor not found" });
+        if (!existingTutor) {
+          return response.status(404).send({ message: 'Tutor not found' });
+        }
+  
+        // Get the updated details from the request
+        const { selectedDays, selectedTimeSlot, experienceYears, experienceMonths } = request.body;
+  
+        // Create a new tutor object with updated availability and experience details
+        const updatedTutor = {
+          ...existingTutor,
+          selectedDays,
+          selectedTimeSlot,
+          experienceYears,
+          experienceMonths,
+        };
+  
+        // Update the tutor's document with the new details
+        await tutorcollection.updateOne({ username: tutorId }, { $set: updatedTutor });
+  
+        return response.send({ message: 'Tutor availability and experience updated successfully' });
+      } catch (error) {
+        console.error(error);
+        return response.status(500).send({ message: 'Internal server error' });
       }
+    })
+  );
   
-      // Get the availability and experience details from the request body
-      const { selectedDays, selectedTimeSlot, experienceYears, experienceMonths } = request.body;
-  
-      // Update the tutor's document with the new details
-      tutor.selectedDays = selectedDays;
-      tutor.selectedTimeSlot = selectedTimeSlot;
-      tutor.experienceYears = experienceYears;
-      tutor.experienceMonths = experienceMonths;
-  
-      await tutor.save(); // Save the updated tutor document
-  
-      return response.send({ message: "Availability and experience details added successfully" });
+
+
+  Tutorapp.post('/update-tutor-services/:id', expressAsyncHandler(async (request, response) => {
+    try {
+        const tutorcollection = request.app.get("tutorcollection");
+        const tutorId = request.params.id;
+
+        // Get the new service details from the request
+        const { serviceType, serviceDetails, serviceMode } = request.body;
+
+        // Get the tutor's existing details
+        const existingTutor = await tutorcollection.findOne({ username: tutorId });
+
+        if (!existingTutor) {
+            return response.status(404).send({ message: "Tutor not found" });
+        }
+
+        // Create a new service object with the new details
+        const newService = {
+            type: serviceType,
+            details: serviceDetails,
+            mode: serviceMode,
+        };
+
+        // Ensure that the `services` field exists in the document
+        existingTutor.services = existingTutor.services || [];
+
+        // Append the new service to the tutor's existing services array
+        existingTutor.services.push(newService);
+
+        // Update the tutor's document with the new services
+        await tutorcollection.updateOne({ username: tutorId }, { $set: existingTutor });
+
+        return response.send({ message: "Tutor services updated successfully" });
     } catch (error) {
-      console.error(error);
-      return response.status(500).send({ message: "Internal server error" });
+        console.error(error);
+        return response.status(500).send({ message: "Internal server error" });
     }
-  }));
-  
+}));
+
 
 // Export the Tutorapp router
 module.exports = Tutorapp;

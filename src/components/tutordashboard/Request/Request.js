@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import './Request.css';
+import { useNavigate } from "react-router-dom";
 
 function Request() {
   const { tutorobj } = useSelector((state) => state.tutor);
   const [Requests, setRequests] = useState([]);
-
+const navigate=useNavigate();
   useEffect(() => {
     // Fetch tutor's existing details and set the initial state
     axios.get(`http://localhost:4000/tutor-api/getusers/${tutorobj.username}`)
@@ -21,28 +22,26 @@ function Request() {
       });
   }, [tutorobj.username]);
 
-  const handleAccept = (studentUsername) => {
+  const handleAccept = (studentobj) => {
     // Implement the logic to accept the request
     axios.post("http://localhost:4000/tutor-api/accept-request", {
       tutorId: tutorobj.username,
-      studentUsername: studentUsername
+      studentobj: studentobj
     })
-    .then(response => {
-      // Request accepted successfully, you can update the state or perform any necessary actions
-      // Reload the requests after accepting if needed
+    .then(response => {      
       alert("request accepted successfully");
-      setRequests(response.data.payload);
+      setRequests(response.data.payload);    
     })
     .catch(error => {
       console.error('Error accepting request:', error);
     });
   };
 
-  const handleReject = (studentUsername) => {
+  const handleReject = (studentobj) => {
     // Implement the logic to reject the request
     axios.post(`http://localhost:4000/tutor-api/reject-request`, {
       tutorId: tutorobj.username,
-      studentUsername: studentUsername
+      studentobj: studentobj
     })
     .then(response => {
       // Request rejected successfully, you can update the state or perform any necessary actions
@@ -70,8 +69,8 @@ function Request() {
                 <span>{request.username}</span>
               </div>
               <div className="request-actions">
-                <button className="accept-button" onClick={() => handleAccept(request.username)}>Accept</button>
-                <button className="reject-button" onClick={() => handleReject(request.username)}>Reject</button>
+                <button className="accept-button" onClick={() => handleAccept(request)}>Accept</button>
+                <button className="reject-button" onClick={() => handleReject(request)}>Reject</button>
               </div>
             </li>
           ))}

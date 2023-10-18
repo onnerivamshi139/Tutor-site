@@ -80,14 +80,14 @@ function Updatedetails() {
               />
             </Form.Group>
 
-            <Form.Group controlId="subjects">
-              <Form.Label>Subjects You Teach</Form.Label>
+            {/* <Form.Group controlId="subjects">
+              <Form.Label>Subjects</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter subjects (comma-separated)"
                 onChange={(e) => setSubjects(e.target.value.split(",").map((subject) => subject.trim()))}
               />
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group controlId="address">
               <Form.Label>Complete Address</Form.Label>

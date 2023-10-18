@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { MdLogin } from 'react-icons/md';
+import { FaUser, FaEnvelope, FaLock, FaUpload, FaSignInAlt } from 'react-icons/fa'; // Import Font Awesome icons
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faEnvelope, faCity, faLock, faFileImage } from '@fortawesome/free-solid-svg-icons';
 import './Signup.css';
 
 function Signup() {
@@ -49,7 +51,7 @@ function Signup() {
 
   return (
     <div className="signup-container">
-    <div className="signup-heading">SignUp</div>
+      <div className="signup-heading">SignUp</div>
       <div className="tutor-link">
         <b>
           Joining as Tutor? <a href="#" onClick={tutornav}>click here</a>
@@ -57,7 +59,9 @@ function Signup() {
       </div>
       <Form onSubmit={handleSubmit(onFormSubmit)}>
         <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
+          <Form.Label>
+            <FaUser /> Username
+          </Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter Username"
@@ -67,7 +71,9 @@ function Signup() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>
+            <FaEnvelope /> Email address
+          </Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
@@ -77,7 +83,9 @@ function Signup() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>City</Form.Label>
+          <Form.Label>
+          <FontAwesomeIcon icon={faCity} /> City
+          </Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter city or town"
@@ -87,7 +95,9 @@ function Signup() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>
+            <FaLock /> Password
+          </Form.Label>
           <Form.Control
             type="password"
             placeholder="Password"
@@ -97,7 +107,9 @@ function Signup() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Select photo</Form.Label>
+          <Form.Label>
+            <FaUpload /> Select photo
+          </Form.Label>
           <Form.Control
             type="file"
             {...register('photo', { required: true })}
@@ -107,7 +119,7 @@ function Signup() {
         </Form.Group>
 
         <Button variant="primary" type="submit">
-          SignUp <MdLogin />
+          SignUp <FaSignInAlt />
         </Button>
       </Form>
     </div>

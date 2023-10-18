@@ -1,119 +1,131 @@
-/* TutorProfile.css */
-
+/* TutorProfile.css (initial styles) */
 /* Styling for the entire container */
-.tutor-profile-container {
+.tutor-profile-container1 {
   display: flex;
   flex-direction: row;
 }
 
 /* Your existing CSS for the profile container */
-/* Your existing CSS for the profile container */
 .profile-container {
   background-color: #333;
   padding: 20px;
   color: white;
-  max-width: 400px; /* Decrease the width of the profile container */
-  margin: 0 auto; /* Center the profile container horizontally */
-  text-align: center; /* Center-align the content */
+  max-width: 400px;
+  
+  text-align: center;
 }
 
 /* Style for the profile image container */
 .profile-img-container {
-  margin-bottom: 20px; /* Add spacing between the image and other details */
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center-align items horizontally */
+  align-items: center;
 }
 
 /* Style for the profile image */
 .profile-img {
-  width: 150px; /* Increase the width of the image */
-  height: 150px; /* Increase the height of the image */
-  border-radius: 50%; /* Make the image round */
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
 }
 
 /* Style for profile details */
 .profile-details {
-  text-align: left; /* Left-align the details */
+  text-align: left;
 }
 
 /* Style for the button */
 .profile-details button {
-  margin-top: 20px; /* Add spacing between details and the button */
+  margin-top: 20px;
 }
 
-
-
-
-/* Styling for the feedback form */
+/* Styling for the feedback form (initial styles) */
 .feedback-form {
+  margin-left: 20px;
   margin-top: 20px;
+  width: 60rem;
+  
 }
 
 .form-group {
   text-align: left;
 }
 
-/* Styling for the Submit Feedback button */
+/* Styling for the Submit Feedback button (initial styles) */
 .btn-primary {
   margin-top: 10px;
 }
 
-/* Optional: Style the h2 heading */
+/* Optional: Style the h2 heading (initial styles) */
 h2 {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-.feedback-container {
-  flex: 1;
-  padding: 20px;
-  height: 100vh;
-  overflow: auto;
-}
 /* Tutorfeedback.css */
 
-/* Horizontal grid for feedback cards */
-.feedback-card-container {
+/* Styling for the feedback card container */
+.feedback-card-container1 {
+  margin-left: 20px;
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-.feedback-form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid #ddd;
 }
 
-/* Style for each feedback card */
+/* Styling for each feedback card */
 .feedback-card {
-  flex: 1;
-  max-width: 300px;
+  flex-basis: calc(50% - 10px); /* 50% width with some spacing in between */
   background-color: #f7f7f7;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative; /* Position relative for icon placement */
+  position: relative;
+  margin-top: 10px;
+  border-radius: 10px;
 }
 
 /* Style for the icon */
 .feedback-icon {
   position: absolute;
-  top: 10px; /* Adjust as needed to position the icon */
-  left: 10px; /* Adjust as needed to position the icon */
-  font-size: 24px; /* Adjust the icon size as needed */
-  /* color: #007bff; */
+  top: 10px;
+  left: 10px;
+  font-size: 24px;
 }
 
 /* Style for feedback text */
 .feedback-text {
-  font-size: 16px;
-  margin-left: 40px; /* Adjust the text size as needed */
+  font-size: 25px;
+  margin-left: 40px;
+  color: #333;
 }
 
 /* Margin for the entire page */
-.tutor-profile-container {
-  margin: 20px; /* Adjust as needed */
+.tutor-profile-container1 {
+  margin: 20px;
 }
+
+/* Horizontal grid for feedback cards (feedback row) */
+.feedback-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Additional styles for circular profile images */
+.circular-profile-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Style for the feedback icon */
+.feedback-icon {
+  font-size: 1.5rem;
+  color: #007bff;
+}
+
+/* Additional modifications can be made here as needed. */

@@ -13,23 +13,61 @@
     margin-top: 8px;
   }
   /* Adjust the position of welcome text and "Get started" to the left */
-.tutor-home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-  }
-  
-  /* Decrease the width of the accordion */
-  .accordion {
-    max-width: 400px; /* Adjust the width as needed */
-    width: 100%;
-  }
+/* TutorHome.css */
 
-  /* Custom styles for the accordion with shadow */
-.custom-shadow {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* Add shadow effect */
-  }
+.tutor-home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcome-header {
+  background-color: #007bff;
+  color: white;
+}
+
+.get-started-heading {
+  margin-top: 20px;
+}
+
+.accordion {
+  width: 100%;
+  max-width: 400px;
+}
+
+.accordion-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tutor-profiles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.profile-card {
+  width: 200px;
+  margin: 10px;
+  box-shadow: 0px 0px 5px 0px #d0d0d0;
+}
+
+.profile-card img {
+  max-height: 150px;
+  object-fit: cover;
+}
+
+.profile-card .card-title {
+  font-size: 18px;
+  text-align: center;
+}
+
+.profile-card .btn {
+  width: 100%;
+}
+
   
   
   

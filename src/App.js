@@ -34,6 +34,7 @@ import ProfileParent from './components/tutordashboard/TutorProfile/ProfileParen
 import TutorHome from './components/tutordashboard/TutorProfile/TutorHome';
 import Students from './components/tutordashboard/TutorProfile/Students';
 import Addavailability from './components/tutordashboard/TutorProfile/Addavailability';
+import AddService from './components/tutordashboard/TutorProfile/AddService';
 import './App.css';
 
 
@@ -70,13 +71,13 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className="navbar-transparent">
         <Container>
           
           <Navbar.Brand href="#home">Tutor Site</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="justify-content-end">
-          <Nav fill variant="pills" className="me-auto">
+          <Nav  className="me-auto">
             {shouldDisplayHome && (
               <>
                 <NavLink className="nav-link" to="/">
@@ -88,9 +89,9 @@ function App() {
                 <NavLink className="nav-link" to="/login">
                   Login
                 </NavLink>
-                <NavLink className="nav-link" to="/contactus">
+                {/* <NavLink className="nav-link" to="/contactus">
                   Contactus
-                </NavLink>
+                </NavLink> */}
                
                 
               </>
@@ -98,12 +99,12 @@ function App() {
             {shouldDisplayUserLogout && (<>
               
               <NavLink className="nav-link" to="/Userdashboard/tutors">Tutors</NavLink>
-            <NavLink className="nav-link" to="/Userdashboard/posts">posts</NavLink>
+            {/* <NavLink className="nav-link" to="/Userdashboard/posts">posts</NavLink> */}
 
             {/* <NavLink className="nav-link" to="/Userdashboard/personalinfo">Profile</NavLink> */}
             <NavDropdown title={userobj ? userobj.username : 'temp'} id="basic-nav-dropdown">
                 {/* ... User dropdown menu ... */}
-                <NavDropdown.Item as={NavLink} to="/Userdashboard/personalinfo" >Profile</NavDropdown.Item>
+                <NavDropdown.Item as={NavLink} to="/Userdashboard/personalinfo/profile" >Profile</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={userLogout}>Logout</NavDropdown.Item>
               </NavDropdown>
@@ -133,19 +134,19 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/tutorlogin" element={<TutorLogin />} />
         <Route path="/contactus" element={<Contactus />} />
-
+        <Route path="/feedback/:tutorId" element={<Tutorfeedback />} />
 
 
         <Route path="/userdashboard" element={<Userdashboard />} >
             <Route path="tutors" element={<Tutors />} />
            
             <Route path="posts" element={<Posts />} />
-            <Route path="feedback/:tutorId" element={<Tutorfeedback />} />
+           
            <Route path="personalinfo" element={<Personalinfo />} > 
            <Route path="profile" element={<Profile />} />
               <Route path="requirements" element={<Requirements />} />
               <Route path="updatedetails" element={<Updatedetails />} />
-              <Route path="" element={<Navigate to="updatedetails" />} />
+              <Route path="" element={<Navigate to="tutors" />} />
            </Route>
 
 
@@ -158,14 +159,15 @@ function App() {
           <Route path="profileparent" element={<ProfileParent/>}>
               <Route path="addavailability" element={<Addavailability />} />
               <Route path="tutorhome" element={<TutorHome />} />
+              <Route path="addservice" element={<AddService />} />
               <Route path="students" element={<Students />} />
               <Route path="extradetails" element={<EXtradetails />} />
               <Route path="tutorprofile" element={<TutorProfile/>} />
-              <Route path="" element={<Navigate to="tutorprofile" />} />
+              <Route path="" element={<Navigate to="tutorhome" />} />
           </Route>
           
           
-          <Route path="" element={<Navigate to="request" replace />} />
+          <Route path="" element={<Navigate to="profileparent" replace />} />
         </Route>
 
 

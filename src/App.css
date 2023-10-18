@@ -45,26 +45,32 @@
   transition: background-color 0.3s, border 0.3s, box-shadow 0.3s;
 }
 
-.navbar .nav-link {
+.nav-link {
   color: black; 
-  transition: color 0.3s;
+  font-size: 18px;
+  margin: 0 15px;
+  transition: color 0.2s;
 }
 
+.nav-link:hover {
+  color: #ffc107;
+}
 
-.navbar .nav-link:hover {
+/* .navbar .nav-link:hover {
   color: rgba(0, 0, 0, 0.7); 
 }
 
 
 .navbar .nav-link.active {
   color: rgba(0, 0, 0, 0.9); 
-}
+} */
 
 
 .navbar-brand {
   color: black; 
   font-weight: bold;
   transition: color 0.3s;
+  margin-left:0px;
 }
 
 

@@ -1,143 +1,21 @@
+/* Home.css */
 
-/* src/App.css */
+.crouselandheader {
+  display: flex;
+  flex-direction: row; /* Arrange items horizontally */
+  justify-content: space-between; /* Add space between items */
+  align-items: center; /* Vertically center items */
+}
 
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: hwb(0 97% 3%);
-  }
-  
-  .body {
-    
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  /* Header Styles */
-  .App-header {
-    text-align: center;
-    padding: 40px 0;
-    background-color: #42a4f4;
-    color: #fff;
-  }
-  
-  .App-header h1 {
-    font-size: 36px;
-  }
-  
-  .App-header p {
-    font-size: 18px;
-    margin: 10px 0;
-  }
-  
-  .App-header button {
-    font-size: 18px;
-    background-color: #fff;
-    color: #4285f4;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .App-header button:hover {
-    background-color: #e0e0e0;
-  }
-  
-  /* About Section Styles */
-  .About {
-    padding: 20px 0;
-  }
-  
-  .About h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
-  }
-  
-  .About p {
-    font-size: 16px;
-    line-height: 1.6;
-  }
-  
-  /* Services Section Styles */
-  .Services {
-    padding: 20px 0;
-  }
-  
-  .Services h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
-  }
-  
-  .Services ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .Services li {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  /* Contact Section Styles */
-  .Contact {
-    padding: 20px 0;
-  }
-  
-  .Contact h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
-  }
-  
-  .Contact p {
-    font-size: 16px;
-  }
-  
-  /* Footer Styles */
-  
-  
-  /* Media Queries */
-  @media screen and (max-width: 600px) {
-    .App-header h1 {
-      font-size: 24px;
-    }
-  
-    .App-header p {
-      font-size: 16px;
-    }
-  
-    .App-header button {
-      font-size: 16px;
-    }
-  
-    .About h2 {
-      font-size: 24px;
-    }
-  
-    .About p {
-      font-size: 14px;
-    }
-  
-    .Services h2 {
-      font-size: 24px;
-    }
-  
-    .Services li {
-      font-size: 16px;
-    }
-  
-    .Contact h2 {
-      font-size: 24px;
-    }
-  
-    .Contact p {
-      font-size: 14px;
-    }
-  
-    .Footer p {
-      font-size: 12px;
-    }
-  }
-  
+/* Style the header separately */
+.App-header {
+  margin-left: 150px;
+  text-align: center; /* Center text in the header */
+}
+
+/* Add space between the carousel and header */
+.crousel {
+  margin-left: 40px; /* Adjust the margin as needed */
+}
+
+/* Additional styling can be added as required */

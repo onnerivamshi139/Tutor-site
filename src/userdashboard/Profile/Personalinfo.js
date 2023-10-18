@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import { useSelector } from 'react-redux';
 import './personalinfo.css'; // Import your custom CSS for styling
 import { useNavigate, Outlet } from 'react-router-dom';
+import { MdPerson, MdEdit, MdList } from 'react-icons/md'; // Import icons
 
 function Personalinfo() {
   const { userobj, isSuccess } = useSelector((state) => state.user);
@@ -14,20 +15,19 @@ function Personalinfo() {
     <div className="profile-container-nav">
       <div className="profile-sidebar">
         <Nav className="flex-column">
-        <Nav.Item>
+          <Nav.Item>
             <Nav.Link onClick={() => navigate('/Userdashboard/personalinfo/profile')}>
-              Profile
+              <MdPerson /> Profile
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link onClick={() => navigate('/Userdashboard/personalinfo/updatedetails')}>
-              Update Details
+              <MdEdit /> Update Details
             </Nav.Link>
           </Nav.Item>
-          
           <Nav.Item>
             <Nav.Link onClick={() => navigate('/Userdashboard/personalinfo/requirements')}>
-              Requirements
+              <MdList /> Requirements
             </Nav.Link>
           </Nav.Item>
         </Nav>

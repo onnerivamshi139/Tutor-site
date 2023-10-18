@@ -1,0 +1,50 @@
+/* Style for the Students component */
+.student-card {
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Style for the left side (profile image) */
+  .student-card .left {
+    flex: 1;
+    margin-right: 20px;
+    max-width: 100px; /* Adjust the width as needed */
+  }
+  
+  /* Style for the image inside the left side */
+  .student-card .left img {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  /* Style for the right side (email and mobile number) */
+  .student-card .right {
+    flex: 2;
+  }
+  
+  /* Style for email and mobile number */
+  .student-card .right p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Style for the "Loading..." message */
+  .student-card p {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .profname{
+    
+      font-size: 25px;
+      margin-left: 40px;
+      color: #333;
+    }
+  
+  

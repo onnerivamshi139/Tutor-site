@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import { updateTutor } from "../../../Slice/tutorSlice";
  import EXtradetails from "../Extradetails/EXtradetails";
+import './TutorProfile.css'
+
 function TutorProfile() {
   const { tutorobj } = useSelector((state) => state.tutor);
    const navigate=useNavigate();
@@ -28,14 +30,12 @@ function TutorProfile() {
           <p>Subjects : {tutorobj.subjects}</p>
           
           
-            <Button variant="primary" onClick={Toeditdeatils}>
-              Edit Details
-            </Button>
+          
           
         </div>
       </div>
 
-      
+      <EXtradetails/>
         
     </div>
   );

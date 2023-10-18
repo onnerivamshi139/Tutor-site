@@ -6,54 +6,65 @@
   align-items: center;
 }
 
-.search-bar {
+.location-bar {
   margin-bottom: 20px;
 }
 
+.profiles {
+  margin-top: 20px;
+  margin-left: 100px; /* Add margin between the search bar and the profile grid */
+}
+
 .tutors-grid {
-  margin-top: 50px;
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px; /* Adjust the gap between tutor cards */
+  gap: 20px; /* Adjust the gap between tutor cards as needed */
 }
 
 .tutor-card {
-  width: 280px; /* Adjust the card width as needed */
+  width: 280px;
   transition: transform 0.2s ease-in-out;
-  margin: 10px; /* Add margin to create spacing between cards */
-  overflow: hidden; /* Hide any content overflow */
-  border-radius: 10px; /* Add rounded corners to the card */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+  margin: 10px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .tutor-card:hover {
-  transform: scale(1.05); /* Adjust the scale factor for hover effect */
+  transform: scale(1.05);
 }
 
 .profile-img {
   width: 100px;
   height: 100px;
-  border-radius: 50%; /* Make profile images circular */
-} 
+  border-radius: 50%;
+}
 
-/* Style the card background colors alternately */
 .tutor-card:nth-child(odd) .profile-img {
-  background-color: #f0f0f0; /* Set your desired background color */
+  background-color: #f0f0f0;
 }
 
 .tutor-card:nth-child(even) .profile-img {
-  background-color: #e0e0e0; /* Set another background color */
+  background-color: #e0e0e0;
 }
 
 .card-content {
-  padding: 20px; /* Add padding for the card content */
+  padding: 20px;
 }
 
 .tutor-link {
   text-decoration: none;
   color: inherit;
+}
+
+.no-profiles-message {
+  margin-top: 20px;
+}
+
+.accordion-container{
+margin-top: 40px;
 }
 
 /* Additional styling can be added for card titles, text, and buttons */

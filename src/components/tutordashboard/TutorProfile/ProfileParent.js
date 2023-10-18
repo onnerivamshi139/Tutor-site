@@ -32,8 +32,8 @@ function ProfileParent() {
           </Nav.Item>
           <Nav.Item></Nav.Item>
           <Nav.Item>
-            <Nav.Link onClick={() => navigate('/dashboard/profileparent/extradetails')}>
-              <FaInfoCircle /> Extra Details
+            <Nav.Link onClick={() => navigate('/dashboard/profileparent/addservice')}>
+              <FaInfoCircle /> Service
             </Nav.Link>
           </Nav.Item>
         </Nav>

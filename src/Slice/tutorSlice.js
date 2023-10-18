@@ -73,7 +73,7 @@ let tutorSlice = createSlice({
     [updateTutor.fulfilled]: (state, action) => {
       state.tutorobj = action.payload;
     },
-    [addavailabilityexperience.fulfilled]: (state, action) => {
+    [updateTutor.fulfilled]: (state, action) => {
       state.tutorobj = action.payload;
     },
   },

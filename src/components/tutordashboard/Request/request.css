@@ -1,12 +1,18 @@
-/* request.css */
+/* Request.css */
 
 .request-container {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
   padding: 20px;
-  background-color: #fafafa; /* Background color for the request container */
+  max-width: 600px;
+  
+  margin:  auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
-  font-size: 1.5rem;
+.request-container h2 {
+  font-size: 24px;
   margin-bottom: 20px;
 }
 
@@ -17,49 +23,44 @@ h2 {
 
 .request-item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: space-evenly;
-  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
   padding: 10px;
-  background-color: #fff; /* Background color for each request item */
-  border: 1px solid #e1e1e1; /* Add a border for separation */
-  border-radius: 10px;
-}
-
-.request-user {
-  display: flex;
-  align-items: center;
+  margin: 10px 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .request-user img {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   margin-right: 10px;
 }
 
 .request-user span {
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .request-actions {
   display: flex;
-  gap: 10px;
-  align-items: center;
 }
 
-.accept-button,
-.reject-button {
-  background-color: #3897f0;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
+.accept-button, .reject-button {
   padding: 5px 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.2s;
 }
 
-.accept-button:hover,
-.reject-button:hover {
-  background-color: #3578e5;
+.accept-button {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.reject-button {
+  background-color: #f44336;
+  color: #fff;
 }
