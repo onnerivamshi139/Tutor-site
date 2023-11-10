@@ -15,9 +15,10 @@ function Tutors() {
   const [filteredTutors, setFilteredTutors] = useState([]);
   const [schoolTuition, setSchoolTuition] = useState(false);
   const [collegeTuition, setCollegeTuition] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(''); // State for the search query
   const { userobj } = useSelector((state) => state.user);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:4000/tutor-api/getusers')
@@ -48,8 +49,23 @@ function Tutors() {
       });
     }
 
+    if (searchQuery) {
+      // Filter based on subjects
+      filtered = filtered.filter(tutor => {
+        if (tutor.subjects && tutor.subjects.toLowerCase().includes(searchQuery.toLowerCase())) {
+          return true;
+        }
+        return false;
+      });
+    }
+
     setFilteredTutors(filtered);
-  }, [city, tutors, userobj, schoolTuition, collegeTuition]);
+  }, [city, tutors, userobj, schoolTuition, collegeTuition, searchQuery]);
+
+  // Handle search input change
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   return (
     <div className="tutors-container">
@@ -88,33 +104,46 @@ function Tutors() {
           </Accordion>
         </div>
       </div>
+      <div className="search-input">
+        <Form.Control
+          type="text"
+          placeholder="Search by subjects"
+          value={searchQuery}
+          onChange={handleSearchInputChange}
+        />
+      </div>
       <div className="profiles">
-      {filteredTutors.length > 0 ? ( // Check if there are filtered tutors
-        <ul className="tutors-grid">
-          {filteredTutors.map(tutor => (
-            <li key={tutor._id} className="tutor-card">
-              <NavLink to={`/feedback/${tutor.username}`} className="tutor-link" style={{ textDecoration: 'none' }}>
-                <Card style={{ width: '100' }} className='mx-auto mt-3'>
-                  <Card.Body className="m-3">
-                    <Card.Img className="profile-img" variant="top" src={tutor.profileImg} />
-                    <Card.Title>
-                      <h3>{tutor.username}</h3>
-                    </Card.Title>
-                    <Card.Text>
-                      <b>Address:</b> {tutor.city}, {tutor.address}
-                    </Card.Text>
-                    {/* {tutor.services ? (
-                    <p>--Teaches for  {tutor.services[0].details}</p>):( <p>--service details are given</p>
-                    )} */}
-                  </Card.Body>
-                </Card>
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="no-profiles-message">No profiles found.</p>
-      )}
+        {filteredTutors.length > 0 ? (
+          <ul className="tutors-grid">
+            {filteredTutors.map(tutor => (
+              <li key={tutor._id} className="tutor-card">
+                <NavLink to={`/feedback/${tutor.username}`} className="tutor-link" style={{ textDecoration: 'none' }}>
+                  <Card style={{ width: '100' }} className='mx-auto mt-3'>
+                    <Card.Body className="m-3">
+                      <Card.Img className="profile-img" variant="top" src={tutor.profileImg} />
+                      <Card.Title>
+                        <h3>{tutor.username}</h3>
+                      </Card.Title>
+                      <Card.Text>
+                        <b>Address:</b> {tutor.city}, {tutor.address}
+                      </Card.Text>
+                      <Card.Text>
+                        <b>Subjects:</b> {tutor.subjects}, {tutor.address}
+                      </Card.Text>
+                      {/* {tutor.services ? (
+                        <p>--Teaches for  {tutor.services[0].details}</p>
+                      ) : (
+                        <p>--service details are given</p>
+                      )} */}
+                    </Card.Body>
+                  </Card>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="no-profiles-message">No profiles found.</p>
+        )}
       </div>
     </div>
   );

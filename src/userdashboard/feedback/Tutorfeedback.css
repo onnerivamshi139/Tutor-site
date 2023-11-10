@@ -128,4 +128,19 @@ h2 {
   color: #007bff;
 }
 
-/* Additional modifications can be made here as needed. */
+/* CSS for gold stars */
+.star-rating {
+  display: inline-block;
+}
+
+.star {
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.gold-star {
+  color: gold; /* Change this color to your preferred gold color */
+}
+
+
+

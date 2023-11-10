@@ -87,7 +87,7 @@ function TutorHome() {
       <h3 className=''>Get Inspired By</h3>
       <div className="tutor-profiles">
         
-        {tutorCollection.slice(5, 10).map((tutor) => (
+        {tutorCollection.slice(0, 5).map((tutor) => (
           <Card key={tutor.username} className="profile-card">
             <Card.Img variant="top" src={tutor.profileImg} />
             <Card.Body>

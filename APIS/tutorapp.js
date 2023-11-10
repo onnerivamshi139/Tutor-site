@@ -412,6 +412,53 @@ Tutorapp.post(
 }));
 
 
+
+Tutorapp.post('/submit-rating/:id', expressAsyncHandler(async (request, response) => {
+    try {
+        const tutorcollection = request.app.get("tutorcollection");
+        const tutorId = request.params.id;
+        const { rating, username } = request.body;
+
+        // Find the tutor by ID
+        const tutor = await tutorcollection.findOne({ username: tutorId });
+
+        if (!tutor) {
+            return response.status(404).send({ message: "Tutor not found" });
+        }
+
+        // Check if the tutor has the `ratings` field, and initialize it if it doesn't exist
+        if (!tutor.ratings) {
+            tutor.ratings = [];
+        }
+
+        // Check if the user has already given a rating
+        const existingRatingIndex = tutor.ratings.findIndex(r => r.username === username);
+
+        if (existingRatingIndex !== -1) {
+            // Update the existing rating
+            tutor.ratings[existingRatingIndex].rating = rating;
+        } else {
+            // Add a new rating
+            tutor.ratings.push({ username, rating });
+        }
+
+        // Calculate the average rating
+        const totalRatings = tutor.ratings.reduce((total, r) => total + r.rating, 0);
+        const averageRating = totalRatings / tutor.ratings.length;
+
+        // Update the tutor's document with the new ratings
+        await tutorcollection.updateOne({ username: tutorId }, { $set: { ratings: tutor.ratings, averageRating } });
+
+        return response.send({ message: "Rating submitted/updated successfully" });
+    } catch (error) {
+        console.error(error);
+        return response.status(500).send({ message: "Internal server error" });
+    }
+}));
+
+
+
+
 // Export the Tutorapp router
 module.exports = Tutorapp;
 

@@ -1,21 +1,19 @@
-// Tutorfeedback.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Card } from "react-bootstrap";
-import { useEffect } from "react";
+import Card from 'react-bootstrap/Card';
+import { BiSolidQuoteAltLeft } from "react-icons/bi";
 import './Tutorfeedback.css';
 import { useSelector } from 'react-redux';
-import { BiSolidQuoteAltLeft } from "react-icons/bi";
 
 function Tutorfeedback() {
   const { tutorId } = useParams();
-  const [tutor, setTutor] = useState([]);
+  const [tutor, setTutor] = useState({});
   const [feedback, setFeedback] = useState("");
   const [feedbackList, setFeedbackList] = useState([]);
-
+  const [userRating, setUserRating] = useState(0);
   const { userobj } = useSelector(state => state.user);
 
   useEffect(() => {
@@ -27,12 +25,13 @@ function Tutorfeedback() {
       .catch(error => {
         console.error('Error fetching tutor data:', error);
       });
-  }, []);
+  }, [tutorId]);
 
   const submitFeedback = () => {
     axios.post(`http://localhost:4000/tutor-api/submit-feedback/${tutorId}`, {
       feedback: feedback,
       username: userobj.username,
+      profileImg: userobj.profileImg,
     })
       .then(response => {
         setFeedbackList(prevFeedbackList => [
@@ -44,6 +43,19 @@ function Tutorfeedback() {
       })
       .catch(error => {
         console.error('Error submitting feedback:', error);
+      });
+  };
+
+  const submitRating = (rating) => {
+    axios.post(`http://localhost:4000/tutor-api/submit-rating/${tutorId}`, {
+      rating: rating,
+      username: userobj.username,
+    })
+      .then(response => {
+        alert("Rating submitted/updated successfully");
+      })
+      .catch(error => {
+        console.error('Error submitting/updating rating:', error);
       });
   };
 
@@ -77,7 +89,20 @@ function Tutorfeedback() {
           ) : (
             <p>--Service details are given</p>
           )}
-          <p></p>
+          <div className="rating-container">
+            <h4>Rating: {tutor.averageRating}</h4>
+            <div className="star-rating">
+              {[1, 2, 3, 4, 5].map((rating) => (
+                <span
+                  key={rating}
+                  onClick={() => submitRating(rating)}
+                  className={`star ${rating <= userRating ? 'gold-star' : ''}`}
+                >
+                  &#9733;
+                </span>
+              ))}
+            </div>
+          </div>
           <Button
             variant="primary"
             onClick={() => sendRequest(tutor.username)}
